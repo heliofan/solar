@@ -1,0 +1,2362 @@
+<!doctype html>
+<html lang="el">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0c1422">
+  <meta name="description" content="Πρόγραμμα δημιουργίας προσφορών ΗΛΙΟΦΑΝ">
+  <title>ΠΡΟΣΦΟΡΑ ΗΛΙΑΚΟΥ ΘΕΡΜΟΣΙΦΩΝΑ | ΗΛΙΟΦΑΝ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#070b12;
+      --panel:#0c1422;
+      --panel2:#0b1220;
+      --stroke:rgba(255,255,255,.08);
+      --stroke2:rgba(255,255,255,.12);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.65);
+      --muted2:rgba(234,240,255,.45);
+      --ok:#32d399;
+      --warn:#fbbf24;
+      --danger:#fb7185;
+      --accent:#60a5fa;
+      --accent2:#a78bfa;
+      --helio-red:#e30613;
+      --helio-blue:#005bbb;
+      --shadow: 0 20px 60px rgba(0,0,0,.55);
+      --radius:16px;
+      --radius2:22px;
+      --font-serif: 'Noto Serif', Georgia, serif;
+    }
+    
+    *{box-sizing:border-box; margin:0; padding:0;}
+    
+    html,body{height:100%; overflow-x:hidden; scroll-behavior:smooth;}
+    
+    body{
+      margin:0;
+      font-family:var(--font-serif);
+      background: 
+        radial-gradient(1200px 800px at 20% 10%, rgba(96,165,250,.18), transparent 50%),
+        radial-gradient(1000px 700px at 80% 20%, rgba(167,139,250,.16), transparent 55%),
+        radial-gradient(900px 650px at 50% 90%, rgba(50,211,153,.10), transparent 55%),
+        linear-gradient(180deg, #050815, #05060c 55%, #04050a);
+      color:var(--text);
+      line-height:1.5;
+    }
+    
+    /* ΝΕΟ HEADER - ΓΕΩΜΕΤΡΙΚΟ SANS-SERIF */
+    .company-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 30px;
+      align-items: start;
+      margin-bottom: 20px;
+      padding: 25px 30px 15px 30px;
+      border-bottom: 2px solid rgba(0,91,187,0.5);
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      background: rgba(12, 20, 34, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 0 0 12px 12px;
+    }
+    
+    .logo-line {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .logo-heliofan {
+      font-family: 'Roboto Condensed', 'Arial Black', sans-serif;
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 5px;
+      letter-spacing: 0.5px;
+    }
+    
+    .helio { color: var(--helio-red); }
+    .fan { color: var(--helio-blue); }
+    
+    .company-subtitle {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 13px;
+      color:var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      margin-top: 3px;
+    }
+    
+    /* ΚΕΝΤΡΙΚΟ ΤΙΤΛΟΣ ΠΡΟΣΦΟΡΑΣ */
+    .offer-center {
+      text-align: center;
+      padding: 0 20px;
+      align-self: center;
+    }
+    
+    .offer-main-title {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--helio-blue);
+      margin: 0;
+      line-height: 1.2;
+    }
+    
+    .offer-slogan {
+      font-size: 13px;
+      color:var(--muted);
+      font-style: italic;
+      margin-top: 5px;
+      font-weight: 400;
+    }
+    
+    /* ΣΤΟΙΧΕΙΑ ΕΠΙΚΟΙΝΩΝΙΑΣ */
+    .contact-info {
+      text-align: right;
+      font-size: 11px;
+      color:var(--muted);
+      line-height: 1.4;
+      font-family: 'Roboto Condensed', sans-serif;
+    }
+    
+    /* VOUCHER ΠΕΔΙΑ (ΚΩΔΙΚΟΙ) */
+    .voucher-fields {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      max-width: 1400px;
+      margin: 15px auto 25px auto;
+      padding: 0 30px;
+    }
+    
+    .voucher-field {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .voucher-label {
+      font-size: 11px;
+      color:var(--muted);
+      margin-bottom: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: 'Roboto Condensed', sans-serif;
+    }
+    
+    .voucher-input {
+      border: 1px solid var(--stroke2);
+      background: rgba(0,0,0,.25);
+      color:var(--text);
+      padding: 10px 12px;
+      font-size: 13px;
+      border-radius: 8px;
+      font-family: 'Roboto Condensed', sans-serif;
+      letter-spacing: 0.5px;
+    }
+    
+    .voucher-input:focus {
+      outline: none;
+      border-color: var(--helio-blue);
+      box-shadow: 0 0 0 2px rgba(0,91,187,0.2);
+    }
+    
+    /* ΟΡΟΙ ΧΡΗΣΗΣ ΜΕ ΜΙΚΡΑ ΓΡΑΜΜΑΤΟΣΕΙΡΑ */
+    .legal-terms {
+      font-size: 8px;
+      color: var(--muted2);
+      line-height: 1.3;
+      margin: 15px auto;
+      padding: 10px 15px;
+      background: rgba(0,0,0,.15);
+      border-radius: 8px;
+      border: 1px solid var(--stroke);
+      max-width: 1400px;
+      font-family: var(--font-serif);
+      text-align: justify;
+    }
+    
+    /* ΤΟ ΥΠΟΛΟΙΠΟ ΜΕΝΕΙ ΙΔΙΟ ΜΕ ΤΗΝ ΑΡΧΙΚΗ */
+    #appLoading{
+      position:fixed;
+      inset:0;
+      background:var(--bg);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      z-index:1000;
+      transition:opacity 0.3s ease;
+    }
+    
+    .loader{
+      width:60px;
+      height:60px;
+      border:3px solid rgba(96,165,250,.2);
+      border-top-color:var(--accent);
+      border-radius:50%;
+      animation:spin 1s linear infinite;
+      margin-bottom:20px;
+    }
+    
+    @keyframes spin{to{transform:rotate(360deg);}}
+    
+    .toast{
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      background:var(--panel);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      padding:14px 18px;
+      max-width:380px;
+      box-shadow:var(--shadow);
+      transform:translateY(100px);
+      opacity:0;
+      transition:all 0.25s ease;
+      z-index:999;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    
+    .toast.show{
+      transform:translateY(0);
+      opacity:1;
+    }
+    
+    .toast-icon{
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
+    
+    .toast.success .toast-icon{background:rgba(50,211,153,.15);}
+    .toast.error .toast-icon{background:rgba(251,113,133,.15);}
+    .toast.info .toast-icon{background:rgba(96,165,250,.15);}
+    
+    .wrap{max-width:1400px; margin:0 auto; padding:24px;}
+    
+    .topbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:20px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:28px;
+      padding-bottom:20px;
+      border-bottom:1px solid var(--stroke);
+    }
+    
+    .brand{display:flex; align-items:center; gap:16px;}
+    
+    .logo{
+      width:56px;
+      height:56px;
+      background: linear-gradient(135deg, #1a3b8b, #2d4cc8);
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      font-size:28px;
+      color:white;
+      font-family:var(--font-serif);
+      box-shadow: 0 4px 12px rgba(26, 59, 139, 0.3);
+    }
+    
+    .brand-text{display:flex; flex-direction:column; gap:4px;}
+    
+    .brand h1{
+      margin:0;
+      font-size:28px;
+      font-weight:700;
+      letter-spacing:.3px;
+      color:var(--text);
+      line-height:1.2;
+    }
+    
+    .brand .sub{font-size:14px; color:var(--muted); font-weight:400;}
+    
+    .actions{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+    
+    button{
+      appearance:none;
+      border:1px solid var(--stroke2);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      color:var(--text);
+      padding:12px 16px;
+      border-radius:12px;
+      cursor:pointer;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      font-weight:600;
+      font-size:14px;
+      letter-spacing:.2px;
+      transition:all 0.25s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+      font-family:var(--font-serif);
+    }
+    
+    button:hover{
+      border-color:rgba(255,255,255,.18);
+      transform:translateY(-2px);
+      box-shadow: 0 15px 40px rgba(0,0,0,.35);
+    }
+    
+    button:active{transform:translateY(0);}
+    
+    button.primary{
+      border-color:rgba(96,165,250,.45);
+      background: linear-gradient(180deg, rgba(96,165,250,.26), rgba(96,165,250,.12));
+    }
+    
+    button.danger{
+      border-color:rgba(251,113,133,.45);
+      background: linear-gradient(180deg, rgba(251,113,133,.22), rgba(251,113,133,.10));
+    }
+    
+    button:disabled{opacity:.5; cursor:not-allowed; transform:none !important;}
+    
+    .btn-icon{width:18px; height:18px; stroke:currentColor;}
+    
+    .grid{display:grid; grid-template-columns: 1.3fr .7fr; gap:24px; align-items:start;}
+    
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      transition:all 0.25s ease;
+    }
+    
+    .card:hover{border-color:rgba(255,255,255,.12);}
+    
+    .card .head{
+      padding:18px 20px;
+      border-bottom:1px solid var(--stroke);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    }
+    
+    .card .head .title{display:flex; flex-direction:column; gap:6px;}
+    
+    .card .head h2{
+      margin:0;
+      font-size:16px;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    
+    .card .head .hint{margin:0; font-size:13px; color:var(--muted);}
+    
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid var(--stroke2);
+      font-size:12px;
+      font-weight:600;
+      color:var(--muted);
+      background: rgba(0,0,0,.18);
+      white-space:nowrap;
+      transition:all 0.25s ease;
+    }
+    
+    .pill.ok{border-color:rgba(50,211,153,.4); color:rgba(50,211,153,.95); background:rgba(50,211,153,.08);}
+    .pill.warn{border-color:rgba(251,191,36,.4); color:rgba(251,191,36,.95); background:rgba(251,191,36,.08);}
+    .pill.error{border-color:rgba(251,113,133,.4); color:rgba(251,113,133,.95); background:rgba(251,113,133,.08);}
+    .pill.info{border-color:rgba(96,165,250,.4); color:rgba(96,165,250,.95); background:rgba(96,165,250,.08);}
+    
+    .content{padding:20px;}
+    
+    .row{display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:16px;}
+    
+    label{display:flex; flex-direction:column; gap:8px; font-size:13px; color:var(--muted); font-weight:500;}
+    
+    input, select, textarea{
+      width:100%;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid var(--stroke2);
+      background: rgba(0,0,0,.22);
+      color:var(--text);
+      outline:none;
+      font-size:14px;
+      transition:all 0.25s ease;
+      font-family:var(--font-serif);
+    }
+    
+    textarea{min-height:100px; resize:vertical; font-family:var(--font-serif);}
+    
+    input:focus, select:focus, textarea:focus{
+      border-color:rgba(96,165,250,.45);
+      box-shadow: 0 0 0 3px rgba(96,165,250,.14);
+    }
+    
+    input:invalid, select:invalid{border-color:rgba(251,113,133,.45);}
+    
+    .note{
+      margin-top:12px;
+      padding:12px 16px;
+      background:rgba(0,0,0,.15);
+      border-radius:12px;
+      border:1px solid var(--stroke);
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.5;
+    }
+    
+    .note strong{color:var(--text);}
+    
+    .section{margin-top:20px; padding-top:20px; border-top:1px solid var(--stroke);}
+    
+    .section h3{
+      margin:0 0 16px;
+      font-size:14px;
+      color:var(--text);
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    
+    .section h3::before{
+      content:"";
+      width:4px;
+      height:16px;
+      background:var(--accent);
+      border-radius:2px;
+    }
+    
+    .table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius:14px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.16);
+    }
+    
+    .table th, .table td{
+      padding:12px 14px;
+      border-bottom:1px solid var(--stroke);
+      font-size:13px;
+      vertical-align:middle;
+    }
+    
+    .table th{
+      text-align:left;
+      color:var(--muted);
+      background: rgba(255,255,255,.03);
+      font-weight:700;
+    }
+    
+    .table tr:last-child td{border-bottom:none}
+    
+    .table td.actions{text-align:right; white-space:nowrap;}
+    
+    .mini{padding:8px 12px; border-radius:10px; font-size:12px; font-weight:700; box-shadow:none;}
+    
+    .summary{position:sticky; top:24px;}
+    
+    .sumline{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:14px 16px;
+      border:1px solid var(--stroke);
+      border-radius:14px;
+      background: rgba(0,0,0,.14);
+      margin-bottom:12px;
+      transition:all 0.25s ease;
+    }
+    
+    .sumline:hover{border-color:var(--stroke2); background:rgba(0,0,0,.2);}
+    
+    .sumline .k{color:var(--muted); font-size:13px; font-weight:500;}
+    
+    .sumline .v{font-weight:800; letter-spacing:.2px; font-size:15px;}
+    
+    .sumline.big .v{font-size:22px; color:var(--accent);}
+    
+    .sumline.big{padding:18px 16px; border-color:rgba(96,165,250,.25); background:rgba(96,165,250,.05);}
+    
+    .sumhelp{
+      font-size:13px;
+      color:var(--muted2);
+      line-height:1.5;
+      margin-top:16px;
+      padding:16px;
+      border:1px dashed rgba(255,255,255,.14);
+      border-radius:14px;
+      background: rgba(0,0,0,.10);
+    }
+    
+    .sigWrap{display:grid; grid-template-columns: 1fr 1fr; gap:16px; align-items:start;}
+    
+    .sigBox{
+      border:1px solid var(--stroke2);
+      border-radius:14px;
+      background: rgba(0,0,0,.18);
+      padding:14px;
+    }
+    
+    canvas{
+      width:100%;
+      height:180px;
+      display:block;
+      border-radius:12px;
+      background: rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      cursor:crosshair;
+      touch-action:none;
+    }
+    
+    .sigActions{display:flex; gap:10px; justify-content:space-between; margin-top:12px;}
+    
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(7,11,18,.95);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:1001;
+      padding:20px;
+      opacity:0;
+      visibility:hidden;
+      transition:all 0.25s ease;
+    }
+    
+    .modal.active{opacity:1; visibility:visible;}
+    
+    .modal-content{
+      background:var(--panel);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius2);
+      max-width:900px;
+      width:100%;
+      max-height:80vh;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      transform:translateY(20px);
+      transition:all 0.25s ease;
+    }
+    
+    .modal.active .modal-content{transform:translateY(0);}
+    
+    .modal-header{padding:20px; border-bottom:1px solid var(--stroke); display:flex; align-items:center; justify-content:space-between;}
+    
+    .modal-body{padding:20px; overflow-y:auto; max-height:calc(80vh - 80px);}
+    
+    .history-list{display:flex; flex-direction:column; gap:10px;}
+    
+    .history-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px;
+      background:rgba(0,0,0,.2);
+      border-radius:12px;
+      border:1px solid var(--stroke);
+      cursor:pointer;
+      transition:all 0.25s ease;
+    }
+    
+    .history-item:hover{background:rgba(0,0,0,.3); border-color:var(--stroke2);}
+    
+    .history-info{display:flex; flex-direction:column; gap:4px;}
+    
+    .history-name{font-weight:600; color:var(--text);}
+    
+    .history-meta{font-size:12px; color:var(--muted); display:flex; gap:12px;}
+    
+    .company-footer {
+      text-align: center;
+      font-size: 15px;
+      color: var(--muted);
+      padding: 20px;
+      margin-top: 30px;
+      border-top: 1px solid var(--stroke);
+      font-family:var(--font-serif);
+      line-height: 1.5;
+    }
+    
+    .company-name {font-weight: 600; margin-bottom: 4px; letter-spacing: 0.3px;}
+    .company-contact {font-size: 14px; color: var(--muted2); font-weight: 500;}
+    
+    @media (max-width: 1100px){
+      .grid{grid-template-columns:1fr}
+      .summary{position:relative; top:auto; margin-top:24px;}
+      .sigWrap{grid-template-columns:1fr}
+      .topbar{flex-direction:column; align-items:stretch;}
+      .brand{flex-direction:column; align-items:flex-start;}
+      .company-header{grid-template-columns:1fr; gap:15px;}
+      .voucher-fields{grid-template-columns:repeat(2, 1fr);}
+    }
+    
+    @media (max-width: 768px){
+      .wrap{padding:16px;}
+      .row{grid-template-columns:1fr;}
+      .actions{justify-content:stretch;}
+      button{flex:1; justify-content:center;}
+      .modal-content{max-height:90vh;}
+      .brand h1{font-size:22px;}
+      .company-header{padding:20px 16px;}
+      .voucher-fields{grid-template-columns:1fr; padding:0 16px;}
+      .logo-heliofan{font-size:36px;}
+    }
+  </style>
+</head>
+<body>
+  <div id="appLoading">
+    <div class="loader"></div>
+    <div style="color:var(--muted); font-size:14px; margin-top:10px;">Φόρτωση συστήματος...</div>
+  </div>
+  
+  <div id="toastContainer"></div>
+  
+  <div class="modal" id="historyModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h2 style="margin:0; font-size:18px;">Ιστορικό Προσφορών</h2>
+          <p style="margin:6px 0 0; color:var(--muted); font-size:13px;">Επιλέξτε προσφορά για φόρτωση</p>
+        </div>
+        <button onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="history-list" id="historyList"></div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="app" style="display:none;">
+    <!-- ΝΕΟ HEADER -->
+    <div class="company-header">
+      <div class="logo-line">
+        <div class="logo-heliofan">
+          <span class="helio">ΗΛΙΟ</span><span class="fan">ΦΑΝ</span>
+        </div>
+        <div class="company-subtitle">
+          Ανανεώσιμες Πηγές Ενέργειας<br>Κατασκευαστική & Εμπορική
+        </div>
+      </div>
+      
+      <div class="offer-center">
+        <div class="offer-main-title">
+          ΠΡΟΣΦΟΡΑ<br>ΗΛΙΑΚΟΥ ΘΕΡΜΟΣΙΦΩΝΑ
+        </div>
+        <div class="offer-slogan">«Επειδή η ποιότητα πρέπει να υπογράφεται.»</div>
+      </div>
+      
+      <div class="contact-info">
+        www.solars.gr<br>
+        info@solars.gr<br>
+        801 700 7808
+      </div>
+    </div>
+    
+    <!-- VOUCHER ΚΩΔΙΚΟΙ -->
+    <div class="voucher-fields">
+      <div class="voucher-field">
+        <div class="voucher-label">Κωδικός Voucher Προϊόντος</div>
+        <input type="text" class="voucher-input" id="productVoucherCode" placeholder="π.χ. PROD-12345-AB" maxlength="20">
+      </div>
+      <div class="voucher-field">
+        <div class="voucher-label">Κωδικός Voucher Υπηρεσίας</div>
+        <input type="text" class="voucher-input" id="serviceVoucherCode" placeholder="π.χ. SERV-67890-CD" maxlength="20">
+      </div>
+      <div class="voucher-field">
+        <div class="voucher-label">Πλαφόν Voucher Προϊόντος (€)</div>
+        <input type="text" class="voucher-input" id="productCap" placeholder="0,00" inputmode="decimal">
+      </div>
+      <div class="voucher-field">
+        <div class="voucher-label">Πλαφόν Voucher Υπηρεσίας (€)</div>
+        <input type="text" class="voucher-input" id="serviceCap" placeholder="0,00" inputmode="decimal">
+      </div>
+    </div>
+    
+    <!-- ΟΡΟΙ ΧΡΗΣΗΣ ΜΕ ΜΙΚΡΑ ΓΡΑΜΜΑΤΟΣΕΙΡΑ -->
+    <div class="legal-terms">
+      Οι ηλιακοί θερμοσίφωνες (ΖΝΧ) είναι συσκευές παραγωγής ΖΝΧ και η απόδοσή τους επηρεάζεται από καιρό/περιοχή/προσανατολισμό/τοποθέτηση/χρήση. Η επιλογή μοντέλου και η θέση εγκατάστασης αποτελούν αποκλειστική ευθύνη του πελάτη. Υλικά σύνδεσης (σωληνώσεις/καλώδια/εξαρτήματα κ.λπ.) και ειδικές εργασίες (αποξήλωση παλαιού, γερανός, ανυψώσεις, σιδηροκατασκευές) χρεώνονται επιπλέον. Η μεταφορά γίνεται με ευθύνη/κίνδυνο αγοραστή και έξοδα πελάτη (εκτός έγγραφης συμφωνίας). Δεν γίνεται αδικαιολόγητη ακύρωση (ειδική παραγγελία/παραγωγή). Η εγγύηση ισχύει μόνο με σωστή εγκατάσταση/χρήση/service. Τα προϊόντα παραμένουν στην κυριότητα της εταιρείας έως πλήρη εξόφληση από πελάτη ή κρατικό φορέα επιδότησης.
+    </div>
+    
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo">Η</div>
+          <div class="brand-text">
+            <h1>
+              ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΣΦΟΡΑΣ
+              <span id="offerNumber" style="font-size: 16px; color: var(--accent); font-weight: 500; margin-left: 12px; background: rgba(96,165,250,.1); padding: 4px 12px; border-radius: 20px;"></span>
+            </h1>
+          </div>
+        </div>
+        
+        <div class="actions">
+          <button id="btnHistory" title="Ιστορικό προσφορών">
+            <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ιστορικό
+          </button>
+          <button class="primary" id="btnSave" title="Αποθήκευση προσφοράς">
+            <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+            </svg>
+            Αποθήκευση
+          </button>
+          <button class="danger" id="btnClear" title="Καθαρισμός φόρμας">
+            <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+            Καθαρισμός
+          </button>
+          <button id="btnPrint" title="Εξαγωγή PDF">
+            <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+            </svg>
+            PDF
+          </button>
+        </div>
+      </div>
+      
+      <div class="grid">
+        <div class="card">
+          <div class="head">
+            <div class="title">
+              <h2>
+                <svg style="width:20px; height:20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                Στοιχεία & Επιλογές
+              </h2>
+              <p class="hint">Όλα τα πεδία μπορούν να τροποποιηθούν χειροκίνητα</p>
+            </div>
+            <span class="pill ok" id="statusPill">✓ OK</span>
+          </div>
+          
+          <div class="content">
+            <div class="section">
+              <h3>Στοιχεία Πελάτη</h3>
+              <div class="row">
+                <label>
+                  Ονοματεπώνυμο *
+                  <input id="customerName" placeholder="π.χ. Γιώργος Παπαδόπουλος" required />
+                </label>
+                <label>
+                  Διεύθυνση
+                  <input id="customerAddress" placeholder="Οδός, Αριθμός, Πόλη" />
+                </label>
+              </div>
+              <div class="row">
+                <label>
+                  Τηλέφωνο
+                  <input id="customerPhone" type="tel" placeholder="2101234567" />
+                </label>
+                <label>
+                  ΑΦΜ
+                  <input id="customerAFM" placeholder="ΑΦΜ πελάτη" />
+                </label>
+              </div>
+            </div>
+            
+            <div class="section">
+              <h3>Στοιχεία Πωλητή</h3>
+              <div class="row">
+                <label>
+                  Ονοματεπώνυμο Πωλητή
+                  <input id="sellerName" placeholder="π.χ. Φάνης" />
+                </label>
+                <label>
+                  Ημερομηνία Προσφοράς
+                  <input id="date" type="date" />
+                </label>
+              </div>
+              <div class="row">
+                <label>
+                  Πρόγραμμα
+                  <select id="program">
+                    <option value="NONE">Χωρίς πρόγραμμα</option>
+                    <option value="P50">Πρόγραμμα 50%</option>
+                    <option value="P60">Πρόγραμμα 60%</option>
+                  </select>
+                </label>
+                <label>
+                  Αριθμός Προσφοράς
+                  <input id="offerNumberInput" placeholder="Αυτόματη δημιουργία" readonly />
+                </label>
+              </div>
+            </div>
+            
+            <div class="section">
+              <h3>Προϊόν</h3>
+              <div class="row">
+                <label>
+                  Αναζήτηση (EAN ή όνομα)
+                  <input id="search" placeholder="π.χ. 175 ή 2162175..." />
+                </label>
+                <label>
+                  Επιλογή προϊόντος
+                  <select id="productSelect">
+                    <option value="">— (χειροκίνητη καταχώριση) —</option>
+                  </select>
+                </label>
+              </div>
+              
+              <div class="row">
+                <label>
+                  Περιγραφή *
+                  <input id="productName" placeholder="Περιγραφή προϊόντος" required />
+                </label>
+                <label>
+                  EAN
+                  <input id="productEAN" placeholder="Κωδικός προϊόντος" />
+                </label>
+              </div>
+              
+              <div class="row">
+                <label>
+                  Τιμή Προϊόντος (με ΦΠΑ) €
+                  <input id="productPrice" inputmode="decimal" placeholder="0,00" />
+                </label>
+                <label>
+                  Ποσότητα
+                  <input id="qty" type="number" min="1" value="1" />
+                </label>
+              </div>
+            </div>
+            
+            <div class="section">
+              <h3>Υπηρεσία & Επιδότηση Προγράμματος</h3>
+              <div class="row">
+                <label>
+                  Χρέωση Υπηρεσίας (με ΦΠΑ) €
+                  <input id="serviceCharge" inputmode="decimal" placeholder="0,00" />
+                  <div class="mutedSmall" id="serviceHint" style="font-size:12px; color:var(--muted); margin-top:4px;"></div>
+                </label>
+                <label>
+                  Συντελεστής Προγράμματος (%)
+                  <input id="programRate" inputmode="decimal" placeholder="0" />
+                </label>
+              </div>
+              
+              <div class="note">
+                <strong>Voucher Προγράμματος (50%/60%):</strong><br>
+                • Εφαρμόζεται ΚΑΙ σε υπηρεσία ΚΑΙ σε προϊόν<br>
+                • Πλαφόν Υπηρεσίας: 124€ για 50% / 223,20€ για 60%<br>
+                • Πλαφόν Προϊόντος: 744€ για 50% / 1.023€ για 60%
+              </div>
+            </div>
+            
+            <div class="section">
+              <h3>Επιπλέον Χρεώσεις</h3>
+              <table class="table" id="extrasTable">
+                <thead>
+                  <tr>
+                    <th style="width:50%">Περιγραφή</th>
+                    <th style="width:25%">Ποσό €</th>
+                    <th style="width:25%" class="right"> </th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+              <div style="display:flex;justify-content:flex-end;margin-top:12px">
+                <button class="mini" id="addExtra">
+                  <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                  </svg>
+                  Προσθήκη Χρέωσης
+                </button>
+              </div>
+            </div>
+            
+            <div class="section">
+              <h3>Επιπλέον Επιδότηση - Έκπτωση ΗΛΙΟΦΑΝ</h3>
+              <div class="note">
+                <strong>Σημείωση:</strong> Αυτές οι εκπτώσεις εφαρμόζονται <strong>μετά το πρόγραμμα</strong> και είναι ξεχωριστές από το voucher.
+              </div>
+              <table class="table" id="discountsTable">
+                <thead>
+                  <tr>
+                    <th style="width:25%">Τύπος</th>
+                    <th style="width:20%">Τιμή</th>
+                    <th style="width:40%">Αιτιολογία/Κωδικός</th>
+                    <th style="width:15%" class="right"> </th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+              <div style="display:flex;justify-content:flex-end;margin-top:12px">
+                <button class="mini" id="addDiscount">
+                  <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                  </svg>
+                  Προσθήκη Έκπτωσης
+                </button>
+              </div>
+              
+              <div class="note">
+                <strong>Κωδικοί έκπτωσης ΗΛΙΟΦΑΝ:</strong><br>
+                HELIO5 (50€), HELIO10 (100€), HELIO15 (5%), HELIO20 (10%)<br>
+                <small>Οποιαδήποτε επιπλέον έκπτωση εμφανίζεται ως "Επιπλέον Επιδότηση ΗΛΙΟΦΑΝ"</small>
+              </div>
+            </div>
+            
+            <div class="section">
+              <h3>Υπογραφή & Σημειώσεις</h3>
+              <div class="sigWrap">
+                <div class="sigBox">
+                  <div class="mutedSmall">Υπογραφή Πελάτη: <strong id="sigCustomerName">—</strong></div>
+                  <canvas id="sigCanvas"></canvas>
+                  <div class="sigActions">
+                    <button class="mini" id="sigClear">Καθαρισμός</button>
+                    <button class="mini" id="sigUndo">Αναίρεση</button>
+                  </div>
+                </div>
+                <div class="sigBox">
+                  <div class="mutedSmall">Σημειώσεις</div>
+                  <textarea id="notes" placeholder="Σημειώσεις για την προσφορά..."></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card summary">
+          <div class="head">
+            <div class="title">
+              <h2>
+                <svg style="width:20px; height:20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                Οικονομική Σύνοψη
+              </h2>
+              <p class="hint">Αναλυτικός υπολογισμός προσφοράς</p>
+            </div>
+            <span class="pill info" id="calcState">Live</span>
+          </div>
+          <div class="content">
+            <div class="sumline">
+              <div class="k">Τιμή Προϊόντος</div>
+              <div class="v" id="sumProductUnit">0,00 €</div>
+            </div>
+            <div class="sumline">
+              <div class="k">Ποσότητα</div>
+              <div class="v" id="sumProductQty">1</div>
+            </div>
+            <div class="sumline">
+              <div class="k">Σύνολο Προϊόντος</div>
+              <div class="v" id="sumProduct">0,00 €</div>
+            </div>
+            
+            <div class="sumline">
+              <div class="k">Χρέωση Υπηρεσίας</div>
+              <div class="v" id="sumService">0,00 €</div>
+            </div>
+            
+            <div class="sumline">
+              <div class="k">Επιπλέον Χρεώσεις</div>
+              <div class="v" id="sumExtras">0,00 €</div>
+            </div>
+            
+            <div class="sumline" style="background:rgba(0,0,0,.2);">
+              <div class="k"><strong>Μικτό Σύνολο</strong></div>
+              <div class="v"><strong id="sumGross">0,00 €</strong></div>
+            </div>
+            
+            <div class="sumline" id="programVoucherLine" style="display:none; border-color:rgba(96,165,250,.25); background:rgba(96,165,250,.05);">
+              <div class="k">
+                Voucher Προγράμματος 
+                <span id="programPercentText"></span>
+              </div>
+              <div class="v" id="sumProgramVoucher">0,00 €</div>
+            </div>
+            
+            <div class="sumline" id="heliofanDiscountLine" style="display:none; border-color:rgba(251,191,36,.25); background:rgba(251,191,36,.05);">
+              <div class="k">Επιπλέον Επιδότηση ΗΛΙΟΦΑΝ</div>
+              <div class="v" id="sumHeliofanDiscount">0,00 €</div>
+            </div>
+            
+            <div class="sumline big">
+              <div class="k"><strong>Τελικό Πληρωτέο</strong></div>
+              <div class="v" id="sumPayable">0,00 €</div>
+            </div>
+            
+            <div id="discountsSummary" style="margin-top:20px; padding:12px; background:rgba(0,0,0,.1); border-radius:12px; border:1px dashed var(--stroke); display:none;">
+              <div style="font-size:13px; color:var(--muted); margin-bottom:8px;"><strong>Σύνοψη Εκπτώσεων:</strong></div>
+              <div id="discountsList" style="font-size:12px; color:var(--muted2);"></div>
+            </div>
+            
+            <div class="sumhelp">
+              <strong>Κανόνες υπολογισμού:</strong><br>
+              1) Voucher προγράμματος = MIN(προϊόν × ποσοστό, πλαφόν) + MIN(υπηρεσία × ποσοστό, πλαφόν)<br>
+              2) Επιπλέον εκπτώσεις ΗΛΙΟΦΑΝ εφαρμόζονται μετά το πρόγραμμα<br>
+              3) Όλες οι εκπτώσεις εμφανίζονται ξεχωριστά
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="company-footer">
+      <div class="company-name">ΗΛΙΟΦΑΝ ΑΝΑΝΕΩΣΙΜΕΣ ΠΗΓΕΣ ΕΝΕΡΓΕΙΑΣ ΚΑΤΑΣΚΕΥΑΣΤΙΚΗ ΚΑΙ ΕΜΠΟΡΙΚΗ</div>
+      <div class="company-contact">www.solars.gr - 801 7007 808</div>
+    </div>
+  </div>
+
+  <!-- ΟΛΟΣ Ο ΚΩΔΙΚΑΣ JavaScript ΠΑΡΑΜΕΝΕΙ ΑΚΡΙΒΩΣ Ο ΙΔΙΟΣ -->
+  <script>
+    'use strict';
+    
+    const PRODUCTS = [
+      { ean:"11221253150", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 125 ΔΕ / 1,50", price:1300.00 },
+      { ean:"11231253150", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 125 ΤΕ / 1,50", price:1450.00 },
+      { ean:"11221253182", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 125 ΔΕ / 1,82", price:1350.00 },
+      { ean:"11231253182", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 125 ΤΕ / 1,82", price:1500.00 },
+      { ean:"11221253200", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 125 ΔΕ / 2,00", price:1400.00 },
+      { ean:"11231253200", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 125 ΤΕ / 2,00", price:1550.00 },
+      { ean:"21621503200", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 150 ΔΕ / 2,00", price:1550.00 },
+      { ean:"21631503200", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 150 ΤΕ / 2,00", price:1700.00 },
+      { ean:"21621753240", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 175 ΔΕ / 2,37", price:1650.00 },
+      { ean:"21631753240", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 175 ΤΕ / 2,37", price:1800.00 },
+      { ean:"21621753300", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 175 ΔΕ / 3,00", price:1700.00 },
+      { ean:"21631753300", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 175 ΤΕ / 3,00", price:1850.00 },
+      { ean:"32022003240", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 200 ΔΕ / 2,37", price:1800.00 },
+      { ean:"32032003240", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 200 ΤΕ / 2,37", price:1950.00 },
+      { ean:"32022253272", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 225 ΔΕ / 2,72", price:1900.00 },
+      { ean:"32032253272", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 225 ΤΕ / 2,72", price:2050.00 },
+      { ean:"32022253300", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 225 ΔΕ / 3,00", price:1950.00 },
+      { ean:"32032253300", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 225 ΤΕ / 3,00", price:2100.00 },
+      { ean:"32022253400", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 225 ΔΕ / 4,00", price:2000.00 },
+      { ean:"32032253400", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 225 ΤΕ / 4,00", price:2150.00 },
+      { ean:"42522503400", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 250 ΔΕ / 4,00", price:2100.00 },
+      { ean:"42532503400", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 250 ΤΕ / 4,00", price:2250.00 },
+      { ean:"53023003474", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 300 ΔΕ / 4,74", price:2250.00 },
+      { ean:"53033003474", name:"ΗΛΙΟΦΑΝ TEP HF MAXIMUM MPK 300 ΤΕ / 4,74", price:2400.00 },
+      { ean:"11221252150", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 125 ΔΕ / 1,50", price:1000.00 },
+      { ean:"11231252150", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 125 ΤΕ / 1,50", price:1100.00 },
+      { ean:"11221252182", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 125 ΔΕ / 1,82", price:1050.00 },
+      { ean:"11231252182", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 125 ΤΕ / 1,82", price:1150.00 },
+      { ean:"11221252200", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 125 ΔΕ / 2,00", price:1080.00 },
+      { ean:"11231252200", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 125 ΤΕ / 2,00", price:1180.00 },
+      { ean:"21621502200", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 150 ΔΕ / 2,00", price:1230.00 },
+      { ean:"21631502200", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 150 ΤΕ / 2,00", price:1330.00 },
+      { ean:"21621752237", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 175 ΔΕ / 2,37", price:1350.00 },
+      { ean:"21631752237", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 175 ΤΕ / 2,37", price:1450.00 },
+      { ean:"21621752300", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 175 ΔΕ / 3,00", price:1400.00 },
+      { ean:"21631752300", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 175 ΤΕ / 3,00", price:1500.00 },
+      { ean:"32022002237", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 200 ΔΕ / 2,37", price:1550.00 },
+      { ean:"32032002237", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 200 ΤΕ / 2,37", price:1650.00 },
+      { ean:"32022252272", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 225 ΔΕ / 2,72", price:1650.00 },
+      { ean:"32032252272", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 225 ΤΕ / 2,72", price:1750.00 },
+      { ean:"32022252300", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 225 ΔΕ / 3,00", price:1700.00 },
+      { ean:"32032252300", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 225 ΤΕ / 3,00", price:1800.00 },
+      { ean:"32022252400", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 225 ΔΕ / 4,00", price:1850.00 },
+      { ean:"32032252400", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 225 ΤΕ / 4,00", price:1950.00 },
+      { ean:"42522502400", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 250 ΔΕ / 4,00", price:1950.00 },
+      { ean:"42532502400", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 250 ΤΕ / 4,00", price:2050.00 },
+      { ean:"53023002474", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 300 ΔΕ / 4,74", price:2050.00 },
+      { ean:"53033002474", name:"ΗΛΙΟΦΑΝ ECO HF MAXIMUM MPK 300 ΤΕ / 4,74", price:2150.00 },
+      { ean:"11221251150", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 125 ΔΕ / 1,50", price:920.00 },
+      { ean:"11231251150", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 125 ΤΕ / 1,50", price:980.00 },
+      { ean:"11221251182", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 125 ΔΕ / 1,82", price:950.00 },
+      { ean:"11231251182", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 125 ΤΕ / 1,82", price:1010.00 },
+      { ean:"11221251200", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 125 ΔΕ / 2,00", price:970.00 },
+      { ean:"11231251200", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 125 ΤΕ / 2,00", price:1035.00 },
+      { ean:"21621501200", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 150 ΔΕ / 2,00", price:990.00 },
+      { ean:"21631501200", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 150 ΤΕ / 2,00", price:1050.00 },
+      { ean:"21621751237", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 175 ΔΕ / 2,37", price:1040.00 },
+      { ean:"21631751237", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 175 ΤΕ / 2,37", price:1110.00 },
+      { ean:"21621751300", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 175 ΔΕ / 3,00", price:1090.00 },
+      { ean:"21631751300", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 175 ΤΕ / 3,00", price:1160.00 },
+      { ean:"32022001237", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 200 ΔΕ / 2,37", price:1140.00 },
+      { ean:"32032001237", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 200 ΤΕ / 2,37", price:1210.00 },
+      { ean:"32022251272", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 225 ΔΕ / 2,72", price:1190.00 },
+      { ean:"32032251272", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 225 ΤΕ / 2,72", price:1250.00 },
+      { ean:"32022251300", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 225 ΔΕ / 3,00", price:1200.00 },
+      { ean:"32032251300", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 225 ΤΕ / 3,00", price:1260.00 },
+      { ean:"32022251400", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 225 ΔΕ / 4,00", price:1270.00 },
+      { ean:"32032251400", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 225 ΤΕ / 4,00", price:1330.00 },
+      { ean:"42522501400", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 250 ΔΕ / 4,00", price:1400.00 },
+      { ean:"42532501400", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 250 ΤΕ / 4,00", price:1460.00 },
+      { ean:"53023001474", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 300 ΔΕ / 4,74", price:1500.00 },
+      { ean:"53033001474", name:"ΗΛΙΟΦΑΝ DGL HF MAXIMUM MPK 300 ΤΕ / 4,74", price:1560.00 },
+      { ean:"11221250150", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 125 ΔΕ / 1,50", price:700.00 },
+      { ean:"11231250150", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 125 ΤΕ / 1,50", price:750.00 },
+      { ean:"11221250182", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 125 ΔΕ / 1,82", price:730.00 },
+      { ean:"11231250182", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 125 ΤΕ / 1,82", price:780.00 },
+      { ean:"11221250200", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 125 ΔΕ / 2,00", price:740.00 },
+      { ean:"11231250200", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 125 ΤΕ / 2,00", price:790.00 },
+      { ean:"21621500200", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 150 ΔΕ / 2,00", price:770.00 },
+      { ean:"21631500200", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 150 ΤΕ / 2,00", price:820.00 },
+      { ean:"21621750237", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 175 ΔΕ / 2,37", price:800.00 },
+      { ean:"21631750237", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 175 ΤΕ / 2,37", price:850.00 },
+      { ean:"21621750300", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 175 ΔΕ / 3,00", price:940.00 },
+      { ean:"21631750300", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 175 ΤΕ / 3,00", price:990.00 },
+      { ean:"32022000237", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 200 ΔΕ / 2,37", price:860.00 },
+      { ean:"32032000237", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 200 ΤΕ / 2,37", price:910.00 },
+      { ean:"32022250272", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 225 ΔΕ / 2,72", price:900.00 },
+      { ean:"32032250272", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 225 ΤΕ / 2,72", price:950.00 },
+      { ean:"32022250300", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 225 ΔΕ / 3,00", price:1000.00 },
+      { ean:"32032250300", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 225 ΤΕ / 3,00", price:1050.00 },
+      { ean:"32022250400", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 225 ΔΕ / 4,00", price:1100.00 },
+      { ean:"32032250400", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 225 ΤΕ / 4,00", price:1150.00 },
+      { ean:"42522500400", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 250 ΔΕ / 4,00", price:1250.00 },
+      { ean:"42532500400", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 250 ΤΕ / 4,00", price:1300.00 },
+      { ean:"53023000474", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 300 ΔΕ / 4,74", price:1400.00 },
+      { ean:"53033000474", name:"ΗΛΙΟΦΑΝ HF SIMPLE MAX MPK 300 ΤΕ / 4,74", price:1450.00 },
+      { ean:"11221256150", name:"ΗΛΙΟΦΑΝ DGL – ECO GLASS HF MAXIMUM MPK 125 ΔΕ / 1,50", price:1400.00 },
+      { ean:"11231256150", name:"ΗΛΙΟΦΑΝ DGL – ECO GLASS HF MAXIMUM MPK 125 ΤΕ / 1,50", price:1550.00 },
+      { ean:"11221256182", name:"ΗΛΙΟΦΑΝ DGL – ECO GLASS HF MAXIMUM MPK 125 ΔΕ / 1,82", price:1450.00 },
+      { ean:"11231256182", name:"ΗΛΙΟΦΑΝ DGL – ECO GLASS HF MAXIMUM MPK 125 ΤΕ / 1,82", price:1600.00 },
+      { ean:"21621506200", name:"ΗΛΙΟΦΑΝ DGL – ECO GLASS HF MAXIMUM MPK 150 ΔΕ / 2,00", price:1480.00 },
+      { ean:"21631506200", name:"ΗΛΙΟΦΑΝ DGL – ECO GLASS HF MAXIMUM MPK 150 ΤΕ / 2,00", price:1630.00 },
+      { ean:"21621756237", name:"ΗΛΙΟΦΑΝ DGL – ECO GLASS HF MAXIMUM MPK 175 ΔΕ / 2,37", price:1500.00 },
+      { ean:"21631756237", name:"ΗΛΙΟΦΑΝ DGL – ECO GLASS HF MAXIMUM MPK 175 ΤΕ / 2,37", price:1650.00 },
+      { ean:"32022256300", name:"ΗΛΙΟΦΑΝ DGL – ECO GLASS HF MAXIMUM MPK 225 ΔΕ / 3,00", price:1550.00 },
+      { ean:"32032256300", name:"ΗΛΙΟΦΑΝ DGL – ECO GLASS HF MAXIMUM MPK 225 ΤΕ / 3,00", price:1700.00 },
+      { ean:"11221255150", name:"ΗΛΙΟΦΑΝ ECO – GL PLUS HF MAXIMUM MPK 125 ΔΕ / 1,50", price:1850.00 },
+      { ean:"11231255150", name:"ΗΛΙΟΦΑΝ ECO – GL PLUS HF MAXIMUM MPK 125 ΤΕ / 1,50", price:2000.00 },
+      { ean:"11221255182", name:"ΗΛΙΟΦΑΝ ECO – GL PLUS HF MAXIMUM MPK 125 ΔΕ / 1,82", price:1900.00 },
+      { ean:"11231255182", name:"ΗΛΙΟΦΑΝ ECO – GL PLUS HF MAXIMUM MPK 125 ΤΕ / 1,82", price:2050.00 },
+      { ean:"21621505200", name:"ΗΛΙΟΦΑΝ ECO – GL PLUS HF MAXIMUM MPK 150 ΔΕ / 2,00", price:2000.00 },
+      { ean:"21631505200", name:"ΗΛΙΟΦΑΝ ECO – GL PLUS HF MAXIMUM MPK 150 ΤΕ / 2,00", price:2150.00 },
+      { ean:"21621755237", name:"ΗΛΙΟΦΑΝ ECO – GL PLUS HF MAXIMUM MPK 175 ΔΕ / 2,37", price:2080.00 },
+      { ean:"21631755237", name:"ΗΛΙΟΦΑΝ ECO – GL PLUS HF MAXIMUM MPK 175 ΤΕ / 2,37", price:2230.00 },
+      { ean:"32022255300", name:"ΗΛΙΟΦΑΝ ECO – GL PLUS HF MAXIMUM MPK 225 ΔΕ / 3,00", price:2150.00 },
+      { ean:"32032255300", name:"ΗΛΙΟΦΑΝ ECO – GL PLUS HF MAXIMUM MPK 225 ΤΕ / 3,00", price:2300.00 }
+    ];
+    
+    const DISCOUNT_CODES = {
+      'HELIO5': { type: 'amount', value: 50, description: 'Έκπτωση ΗΛΙΟΦΑΝ 50€' },
+      'HELIO10': { type: 'amount', value: 100, description: 'Έκπτωση ΗΛΙΟΦΑΝ 100€' },
+      'HELIO15': { type: 'percent', value: 5, description: 'Έκπτωση ΗΛΙΟΦΑΝ 5%' },
+      'HELIO20': { type: 'percent', value: 10, description: 'Έκπτωση ΗΛΙΟΦΑΝ 10%' }
+    };
+    
+    function $(id) { return document.getElementById(id); }
+    
+    function toNumber(val) {
+      if (val === null || val === undefined) return 0;
+      const str = String(val).trim()
+        .replace(/\./g, '')
+        .replace(',', '.');
+      const num = parseFloat(str);
+      return isFinite(num) ? num : 0;
+    }
+    
+    function formatEUR(num) {
+      const value = typeof num === 'number' && isFinite(num) ? num : 0;
+      return value.toLocaleString('el-GR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }) + ' €';
+    }
+    
+    function formatNumber(num, decimals = 2) {
+      return (typeof num === 'number' && isFinite(num) ? num : 0)
+        .toLocaleString('el-GR', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    }
+    
+    function clamp(num, min = 0, max = Infinity) {
+      return Math.max(min, Math.min(max, typeof num === 'number' && isFinite(num) ? num : 0));
+    }
+    
+    function todayISO() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+    
+    function showToast(message, type = 'info') {
+      const container = $('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <div class="toast-icon">${type === 'success' ? '✓' : type === 'error' ? '✗' : 'i'}</div>
+        <div>${message}</div>
+      `;
+      
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+      
+      toast.addEventListener('click', () => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      });
+    }
+    
+    function populateProductSelect() {
+      const select = $('productSelect');
+      select.innerHTML = '<option value="">— (χειροκίνητη καταχώριση) —</option>';
+      
+      PRODUCTS.forEach(product => {
+        const option = document.createElement('option');
+        option.value = product.ean;
+        option.textContent = `${product.ean} — ${product.name} (${formatEUR(product.price)})`;
+        select.appendChild(option);
+      });
+    }
+    
+    function searchProducts(query) {
+      const term = String(query || '').trim().toLowerCase();
+      if (!term) return PRODUCTS;
+      
+      return PRODUCTS.filter(product => 
+        product.ean.includes(term) || 
+        product.name.toLowerCase().includes(term)
+      );
+    }
+    
+    function selectProduct(ean) {
+      const product = PRODUCTS.find(p => p.ean === ean);
+      if (!product) return false;
+      
+      $('productEAN').value = product.ean;
+      $('productName').value = product.name;
+      $('productPrice').value = formatNumber(product.price);
+      
+      calculate();
+      return true;
+    }
+    
+    let extras = [];
+    let discounts = [];
+    
+    function addExtraRow(desc = '', amount = 0) {
+      extras.push({ desc, amount });
+      renderExtras();
+      calculate();
+    }
+    
+    function removeExtraRow(index) {
+      extras.splice(index, 1);
+      renderExtras();
+      calculate();
+    }
+    
+    function addDiscountRow(type = 'AMOUNT', value = 0, reason = '', code = '') {
+      discounts.push({ type, value, reason, code });
+      renderDiscounts();
+      calculate();
+    }
+    
+    function removeDiscountRow(index) {
+      discounts.splice(index, 1);
+      renderDiscounts();
+      calculate();
+    }
+    
+    function renderExtras() {
+      const tbody = $('extrasTable').querySelector('tbody');
+      tbody.innerHTML = '';
+      
+      extras.forEach((extra, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><input type="text" data-index="${index}" data-field="desc" value="${extra.desc}" placeholder="Περιγραφή" /></td>
+          <td><input type="text" data-index="${index}" data-field="amount" value="${formatNumber(extra.amount)}" placeholder="0,00" /></td>
+          <td class="actions"><button class="mini danger" data-remove="${index}">Αφαίρεση</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+      
+      tbody.querySelectorAll('input').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const index = parseInt(e.target.dataset.index);
+          const field = e.target.dataset.field;
+          const value = e.target.value;
+          
+          if (field === 'desc') {
+            extras[index].desc = value;
+          } else if (field === 'amount') {
+            extras[index].amount = toNumber(value);
+          }
+          
+          calculate();
+        });
+      });
+      
+      tbody.querySelectorAll('[data-remove]').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const index = parseInt(e.target.dataset.remove);
+          removeExtraRow(index);
+        });
+      });
+    }
+    
+    function renderDiscounts() {
+      const tbody = $('discountsTable').querySelector('tbody');
+      tbody.innerHTML = '';
+      
+      discounts.forEach((discount, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>
+            <select data-index="${index}" data-field="type">
+              <option value="AMOUNT" ${discount.type === 'AMOUNT' ? 'selected' : ''}>Ποσό €</option>
+              <option value="PERCENT" ${discount.type === 'PERCENT' ? 'selected' : ''}>Ποσοστό %</option>
+            </select>
+          </td>
+          <td><input type="text" data-index="${index}" data-field="value" value="${formatNumber(discount.value)}" placeholder="0,00" /></td>
+          <td><input type="text" data-index="${index}" data-field="reason" value="${discount.reason}" placeholder="Αιτιολογία/Κωδικός" /></td>
+          <td class="actions"><button class="mini danger" data-remove="${index}">Αφαίρεση</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+      
+      tbody.querySelectorAll('input, select').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const index = parseInt(e.target.dataset.index);
+          const field = e.target.dataset.field;
+          const value = e.target.value;
+          
+          if (field === 'type') {
+            discounts[index].type = value;
+          } else if (field === 'value') {
+            discounts[index].value = toNumber(value);
+          } else if (field === 'reason') {
+            discounts[index].reason = value;
+            
+            const code = value.trim().toUpperCase();
+            if (DISCOUNT_CODES[code]) {
+              const discount = DISCOUNT_CODES[code];
+              if (discount.type === 'percent') {
+                discounts[index].type = 'PERCENT';
+                discounts[index].value = discount.value;
+              } else if (discount.type === 'amount') {
+                discounts[index].type = 'AMOUNT';
+                discounts[index].value = discount.value;
+              }
+              renderDiscounts();
+              showToast(`Εφαρμόστηκε κωδικός: ${discount.description}`, 'success');
+            }
+          }
+          
+          calculate();
+        });
+      });
+      
+      tbody.querySelectorAll('[data-remove]').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const index = parseInt(e.target.dataset.remove);
+          removeDiscountRow(index);
+        });
+      });
+    }
+    
+    function calculate() {
+      const qty = Math.max(1, Math.floor(toNumber($('qty').value) || 1));
+      const productPrice = toNumber($('productPrice').value);
+      
+      const serviceCharge = clamp(toNumber($('serviceCharge').value));
+      const extrasTotal = extras.reduce((sum, extra) => sum + clamp(toNumber(extra.amount)), 0);
+      
+      const productTotal = productPrice * qty;
+      const gross = productTotal + serviceCharge + extrasTotal;
+      
+      const programRate = clamp(toNumber($('programRate').value), 0, 100);
+      const serviceCap = clamp(toNumber($('serviceCap').value));
+      const productCap = clamp(toNumber($('productCap').value));
+      
+      const programVoucherProduct = (programRate > 0 && productCap > 0) 
+        ? Math.min(productTotal * (programRate / 100), productCap) 
+        : 0;
+      
+      const programVoucherService = (programRate > 0 && serviceCap > 0) 
+        ? Math.min(serviceCharge * (programRate / 100), serviceCap) 
+        : 0;
+      
+      const programVoucherTotal = programVoucherProduct + programVoucherService;
+      
+      let heliofanDiscountTotal = 0;
+      discounts.forEach(d => {
+        const value = clamp(toNumber(d.value));
+        if (d.type === 'PERCENT') {
+          heliofanDiscountTotal += gross * (value / 100);
+        } else {
+          heliofanDiscountTotal += value;
+        }
+      });
+      
+      const totalDiscount = programVoucherTotal + heliofanDiscountTotal;
+      const payable = Math.max(0, gross - totalDiscount);
+      
+      updateUI({
+        productPrice,
+        qty,
+        productTotal,
+        serviceCharge,
+        extrasTotal,
+        gross,
+        programVoucherTotal,
+        programVoucherProduct,
+        programVoucherService,
+        programRate,
+        heliofanDiscountTotal,
+        totalDiscount,
+        payable
+      });
+    }
+    
+    function updateUI(results) {
+      $('sumProductUnit').textContent = formatEUR(results.productPrice);
+      $('sumProductQty').textContent = results.qty;
+      $('sumProduct').textContent = formatEUR(results.productTotal);
+      $('sumService').textContent = formatEUR(results.serviceCharge);
+      $('sumExtras').textContent = formatEUR(results.extrasTotal);
+      $('sumGross').textContent = formatEUR(results.gross);
+      
+      if (results.programVoucherTotal > 0) {
+        $('programVoucherLine').style.display = 'flex';
+        $('programPercentText').textContent = `(${formatNumber(results.programRate)}%)`;
+        $('sumProgramVoucher').textContent = `-${formatEUR(results.programVoucherTotal)}`;
+      } else {
+        $('programVoucherLine').style.display = 'none';
+      }
+      
+      if (results.heliofanDiscountTotal > 0) {
+        $('heliofanDiscountLine').style.display = 'flex';
+        $('sumHeliofanDiscount').textContent = `-${formatEUR(results.heliofanDiscountTotal)}`;
+      } else {
+        $('heliofanDiscountLine').style.display = 'none';
+      }
+      
+      $('sumPayable').textContent = formatEUR(results.payable);
+      
+      updateDiscountsSummary(results);
+      updateStatus();
+    }
+    
+    function updateDiscountsSummary(results) {
+      const container = $('discountsSummary');
+      const list = $('discountsList');
+      
+      const hasProgram = results.programVoucherTotal > 0;
+      const hasHeliofanDiscounts = results.heliofanDiscountTotal > 0;
+      
+      if (hasProgram || hasHeliofanDiscounts) {
+        container.style.display = 'block';
+        let html = '';
+        
+        if (hasProgram) {
+          html += `<div>• Voucher Προγράμματος ${formatNumber(results.programRate)}%: -${formatEUR(results.programVoucherTotal)}</div>`;
+          if (results.programVoucherProduct > 0) {
+            html += `<div style="margin-left: 12px;">↳ Προϊόν: -${formatEUR(results.programVoucherProduct)}</div>`;
+          }
+          if (results.programVoucherService > 0) {
+            html += `<div style="margin-left: 12px;">↳ Υπηρεσία: -${formatEUR(results.programVoucherService)}</div>`;
+          }
+        }
+        
+        discounts.forEach((d, i) => {
+          const value = formatNumber(d.value);
+          const type = d.type === 'PERCENT' ? `${value}%` : `${formatEUR(d.value)}`;
+          const reason = d.reason ? ` (${d.reason})` : '';
+          html += `<div>• Επιπλέον Επιδότηση ΗΛΙΟΦΑΝ: ${type}${reason}</div>`;
+        });
+        
+        list.innerHTML = html;
+      } else {
+        container.style.display = 'none';
+      }
+    }
+    
+    function updateStatus() {
+      const pill = $('statusPill');
+      const warnings = [];
+      
+      if (!$('customerName').value.trim()) warnings.push('Όνομα πελάτη');
+      if (!$('productName').value.trim()) warnings.push('Περιγραφή προϊόντος');
+      
+      if (warnings.length > 0) {
+        pill.textContent = `Λείπουν: ${warnings.join(', ')}`;
+        pill.className = 'pill warn';
+      } else {
+        pill.textContent = '✓ OK';
+        pill.className = 'pill ok';
+      }
+    }
+    
+    function applyProgramDefaults(program) {
+      if (program === 'P50') {
+        $('serviceCharge').value = '248,00';
+        $('serviceCap').value = '124,00';
+        $('productCap').value = '744,00';
+        $('programRate').value = '50';
+        $('serviceHint').textContent = 'Πρόγραμμα 50% • Υπηρεσία 248€ • Πλαφόν υπηρεσίας 124€ • Πλαφόν προϊόντος 744€';
+      } else if (program === 'P60') {
+        $('serviceCharge').value = '372,00';
+        $('serviceCap').value = '223,20';
+        $('productCap').value = '1023,00';
+        $('programRate').value = '60';
+        $('serviceHint').textContent = 'Πρόγραμμα 60% • Υπηρεσία 372€ • Πλαφόν υπηρεσίας 223,20€ • Πλαφόν προϊόντος 1.023€';
+      } else {
+        $('serviceCharge').value = '';
+        $('serviceCap').value = '';
+        $('productCap').value = '';
+        $('programRate').value = '';
+        $('serviceHint').textContent = 'Χωρίς πρόγραμμα: δεν εφαρμόζεται επιδότηση.';
+      }
+      
+      calculate();
+    }
+    
+    const canvas = $('sigCanvas');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let lastX = 0;
+    let lastY = 0;
+    const signatureHistory = [];
+    
+    function resizeCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      
+      ctx.scale(dpr, dpr);
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = '#eaf0ff';
+    }
+    
+    function startDrawing(e) {
+      drawing = true;
+      const rect = canvas.getBoundingClientRect();
+      lastX = e.clientX - rect.left;
+      lastY = e.clientY - rect.top;
+      
+      saveSignatureState();
+    }
+    
+    function startDrawingTouch(e) {
+      e.preventDefault();
+      const touch = e.touches[0];
+      drawing = true;
+      const rect = canvas.getBoundingClientRect();
+      lastX = touch.clientX - rect.left;
+      lastY = touch.clientY - rect.top;
+      
+      saveSignatureState();
+    }
+    
+    function draw(e) {
+      if (!drawing) return;
+      
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      
+      lastX = x;
+      lastY = y;
+    }
+    
+    function drawTouch(e) {
+      e.preventDefault();
+      if (!drawing) return;
+      
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      
+      lastX = x;
+      lastY = y;
+    }
+    
+    function stopDrawing() {
+      drawing = false;
+    }
+    
+    function clearSignature() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      signatureHistory.length = 0;
+    }
+    
+    function saveSignatureState() {
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      signatureHistory.push(imageData);
+      
+      if (signatureHistory.length > 10) {
+        signatureHistory.shift();
+      }
+    }
+    
+    function undoSignature() {
+      if (signatureHistory.length > 0) {
+        signatureHistory.pop();
+        if (signatureHistory.length > 0) {
+          const prevState = signatureHistory[signatureHistory.length - 1];
+          ctx.putImageData(prevState, 0, 0);
+        } else {
+          clearSignature();
+        }
+      }
+    }
+    
+    function getSignatureDataURL() {
+      return canvas.toDataURL('image/png');
+    }
+    
+    function generateOfferNumber() {
+      const now = new Date();
+      const year = now.getFullYear().toString().slice(-2);
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+      return `HLF${year}${month}${day}${random}`;
+    }
+    
+    function saveOffer() {
+      const validation = validateForm();
+      if (!validation.isValid) {
+        showToast(`Συμπληρώστε τα υποχρεωτικά πεδία: ${validation.errors.join(', ')}`, 'error');
+        return;
+      }
+      
+      const offer = {
+        id: generateOfferNumber(),
+        timestamp: new Date().toISOString(),
+        customer: {
+          name: $('customerName').value,
+          address: $('customerAddress').value,
+          phone: $('customerPhone').value,
+          afm: $('customerAFM').value
+        },
+        seller: $('sellerName').value,
+        date: $('date').value,
+        program: $('program').value,
+        product: {
+          name: $('productName').value,
+          ean: $('productEAN').value,
+          price: $('productPrice').value,
+          qty: $('qty').value
+        },
+        service: {
+          charge: $('serviceCharge').value,
+          cap: $('serviceCap').value
+        },
+        caps: {
+          product: $('productCap').value,
+          rate: $('programRate').value
+        },
+        voucherCodes: {
+          product: $('productVoucherCode').value,
+          service: $('serviceVoucherCode').value
+        },
+        extras: [...extras],
+        discounts: [...discounts],
+        notes: $('notes').value,
+        signature: getSignatureDataURL()
+      };
+      
+      const offers = JSON.parse(localStorage.getItem('heliofan_offers') || '[]');
+      offers.unshift(offer);
+      localStorage.setItem('heliofan_offers', JSON.stringify(offers.slice(0, 50)));
+      
+      $('offerNumberInput').value = offer.id;
+      $('offerNumber').textContent = `#${offer.id}`;
+      
+      showToast('Η προσφορά αποθηκεύτηκε επιτυχώς', 'success');
+    }
+    
+    function loadOffers() {
+      return JSON.parse(localStorage.getItem('heliofan_offers') || '[]');
+    }
+    
+    function loadOffer(offerId) {
+      const offers = loadOffers();
+      const offer = offers.find(o => o.id === offerId);
+      
+      if (!offer) {
+        showToast('Η προσφορά δεν βρέθηκε', 'error');
+        return;
+      }
+      
+      $('customerName').value = offer.customer.name || '';
+      $('customerAddress').value = offer.customer.address || '';
+      $('customerPhone').value = offer.customer.phone || '';
+      $('customerAFM').value = offer.customer.afm || '';
+      $('sellerName').value = offer.seller || '';
+      $('date').value = offer.date || todayISO();
+      $('program').value = offer.program || 'NONE';
+      
+      $('productName').value = offer.product.name || '';
+      $('productEAN').value = offer.product.ean || '';
+      $('productPrice').value = offer.product.price || '';
+      $('qty').value = offer.product.qty || '1';
+      
+      $('serviceCharge').value = offer.service.charge || '';
+      $('serviceCap').value = offer.service.cap || '';
+      
+      $('productCap').value = offer.caps.product || '';
+      $('programRate').value = offer.caps.rate || '';
+      
+      $('productVoucherCode').value = offer.voucherCodes?.product || '';
+      $('serviceVoucherCode').value = offer.voucherCodes?.service || '';
+      
+      extras = [...(offer.extras || [])];
+      discounts = [...(offer.discounts || [])];
+      renderExtras();
+      renderDiscounts();
+      
+      $('notes').value = offer.notes || '';
+      
+      if (offer.signature) {
+        const img = new Image();
+        img.onload = () => {
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          saveSignatureState();
+        };
+        img.src = offer.signature;
+      }
+      
+      $('offerNumberInput').value = offer.id;
+      $('offerNumber').textContent = `#${offer.id}`;
+      
+      applyProgramDefaults(offer.program);
+      calculate();
+      showToast(`Φορτώθηκε προσφορά ${offer.id}`, 'success');
+    }
+    
+    function clearForm() {
+      if (!confirm('Να γίνει καθαρισμός όλων των πεδίων;')) return;
+      
+      $('customerName').value = '';
+      $('customerAddress').value = '';
+      $('customerPhone').value = '';
+      $('customerAFM').value = '';
+      $('sellerName').value = '';
+      $('date').value = todayISO();
+      $('program').value = 'NONE';
+      
+      $('productName').value = '';
+      $('productEAN').value = '';
+      $('productPrice').value = '';
+      $('qty').value = '1';
+      
+      $('serviceCharge').value = '';
+      $('serviceCap').value = '';
+      $('productCap').value = '';
+      $('programRate').value = '';
+      
+      $('productVoucherCode').value = '';
+      $('serviceVoucherCode').value = '';
+      
+      extras = [];
+      discounts = [];
+      renderExtras();
+      renderDiscounts();
+      
+      $('notes').value = '';
+      clearSignature();
+      
+      $('offerNumberInput').value = '';
+      $('offerNumber').textContent = '';
+      
+      applyProgramDefaults('NONE');
+      showToast('Το φόρμα καθαρίστηκε', 'info');
+    }
+    
+    function validateForm() {
+      const errors = [];
+      
+      if (!$('customerName').value.trim()) errors.push('Όνομα πελάτη');
+      if (!$('productName').value.trim()) errors.push('Περιγραφή προϊόντος');
+      
+      return {
+        isValid: errors.length === 0,
+        errors
+      };
+    }
+    
+    function generatePDF() {
+      const validation = validateForm();
+      if (!validation.isValid) {
+        showToast(`Συμπληρώστε τα υποχρεωτικά πεδία: ${validation.errors.join(', ')}`, 'error');
+        return;
+      }
+      
+      calculate();
+      
+      const printWindow = window.open('', '_blank');
+      if (!printWindow) {
+        showToast('Παρακαλώ επιτρέψτε τα popups για τη δημιουργία PDF', 'error');
+        return;
+      }
+      
+      const offerNumber = $('offerNumberInput').value || generateOfferNumber();
+      const date = $('date').value;
+      const customerName = $('customerName').value;
+      const customerAddress = $('customerAddress').value;
+      const customerPhone = $('customerPhone').value;
+      const customerAFM = $('customerAFM').value;
+      const sellerName = $('sellerName').value;
+      const productName = $('productName').value;
+      const productEAN = $('productEAN').value;
+      const productPrice = formatEUR(toNumber($('productPrice').value));
+      const qty = $('qty').value;
+      const productTotal = $('sumProduct').textContent;
+      const serviceCharge = $('sumService').textContent;
+      const extrasTotal = $('sumExtras').textContent;
+      const grossTotal = $('sumGross').textContent;
+      const programVoucher = $('sumProgramVoucher').textContent;
+      const heliofanDiscountTotal = $('sumHeliofanDiscount').textContent;
+      const finalTotal = $('sumPayable').textContent;
+      const notes = $('notes').value;
+      const signature = getSignatureDataURL();
+      const productVoucherCode = $('productVoucherCode').value;
+      const serviceVoucherCode = $('serviceVoucherCode').value;
+      
+      const html = `
+        <!DOCTYPE html>
+        <html lang="el">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Προσφορά ${offerNumber}</title>
+          <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+          <style>
+            @page { size: A4; margin: 10mm; }
+            body { 
+              font-family: 'Noto Serif', Georgia, serif; 
+              color: #1a1a1a; 
+              line-height: 1.3;
+              margin: 0;
+              padding: 0;
+              font-size: 10pt;
+            }
+            .container { max-width: 100%; padding: 2mm; }
+            
+            .header-print {
+              display: flex;
+              justify-content: space-between;
+              align-items: flex-start;
+              border-bottom: 2px solid #005bbb;
+              padding-bottom: 8px;
+              margin-bottom: 12px;
+            }
+            
+            .logo-print {
+              font-family: 'Roboto Condensed', sans-serif;
+              font-size: 28px;
+              font-weight: 900;
+              line-height: 1;
+            }
+            
+            .helio-print { color: #e30613; }
+            .fan-print { color: #005bbb; }
+            
+            .offer-title-print {
+              text-align: center;
+              flex-grow: 1;
+              padding: 0 20px;
+            }
+            
+            .offer-title-print h1 {
+              font-size: 18px;
+              color: #005bbb;
+              margin: 0;
+              font-weight: 700;
+            }
+            
+            .customer-info { 
+              display: grid; 
+              grid-template-columns: 1fr 1fr; 
+              gap: 10px; 
+              margin-bottom: 12px;
+              font-size: 9pt;
+            }
+            
+            .info-box { 
+              padding: 6px; 
+              border: 1px solid #e0e0e0; 
+              border-radius: 4px;
+              background: #f9f9f9;
+            }
+            
+            .info-box h3 { margin: 0 0 5px 0; font-size: 11px; color: #005bbb; font-weight: 600; }
+            
+            table { 
+              width: 100%; 
+              border-collapse: collapse; 
+              margin: 10px 0;
+              font-size: 9pt;
+            }
+            
+            th { 
+              background: #005bbb; 
+              color: white; 
+              padding: 6px; 
+              text-align: left;
+              font-weight: 600;
+            }
+            
+            td { 
+              padding: 6px; 
+              border-bottom: 1px solid #e0e0e0;
+              vertical-align: top;
+            }
+            
+            .totals { 
+              margin-top: 12px; 
+              border-top: 2px solid #005bbb; 
+              padding-top: 10px;
+            }
+            
+            .total-row { 
+              display: flex; 
+              justify-content: space-between; 
+              margin: 3px 0;
+              padding: 3px 0;
+              font-size: 10pt;
+            }
+            
+            .final-total { 
+              font-size: 14px; 
+              font-weight: bold; 
+              color: #005bbb;
+              border-top: 2px solid #005bbb;
+              margin-top: 6px;
+              padding-top: 6px;
+            }
+            
+            .signatures { 
+              display: grid; 
+              grid-template-columns: 1fr 1fr; 
+              gap: 20px; 
+              margin-top: 20px;
+              padding-top: 12px;
+              border-top: 1px dashed #ccc;
+            }
+            
+            .signature-box { text-align: center; font-size: 9pt; }
+            .signature-line { 
+              border-bottom: 1px solid #000; 
+              margin: 25px 0 5px 0;
+              height: 35px;
+            }
+            
+            .legal-terms-print {
+              font-size: 6pt;
+              color: #666;
+              line-height: 1.2;
+              margin: 8px 0;
+              padding: 6px;
+              background: #f8f9fa;
+              border: 1px solid #dee2e6;
+              border-radius: 3px;
+              text-align: justify;
+            }
+            
+            .company-footer-print {
+              margin-top: 15px;
+              text-align: center;
+              font-size: 11px;
+              color: #005bbb;
+              font-weight: 600;
+              padding: 8px 0;
+              border-top: 1px solid #eee;
+            }
+            
+            @media print {
+              body { -webkit-print-color-adjust: exact; }
+              .no-print { display: none !important; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header-print">
+              <div>
+                <div class="logo-print">
+                  <span class="helio-print">ΗΛΙΟ</span><span class="fan-print">ΦΑΝ</span>
+                </div>
+                <div style="font-size: 8pt; color: #666; margin-top: 2px;">
+                  Ανανεώσιμες Πηγές Ενέργειας<br>Κατασκευαστική & Εμπορική
+                </div>
+              </div>
+              <div class="offer-title-print">
+                <h1>ΠΡΟΣΦΟΡΑ ΗΛΙΑΚΟΥ ΘΕΡΜΟΣΙΦΩΝΑ</h1>
+                <div style="font-size: 9pt; color: #666;">Αριθμός: ${offerNumber}</div>
+              </div>
+              <div style="text-align: right; font-size: 9pt; color: #666;">
+                Ημερομηνία: ${date}<br>
+                Πωλητής: ${sellerName || '-'}
+              </div>
+            </div>
+            
+            <div class="customer-info">
+              <div class="info-box">
+                <h3>Στοιχεία Πελάτη</h3>
+                <div><strong>Ονοματεπώνυμο:</strong> ${customerName}</div>
+                <div><strong>Διεύθυνση:</strong> ${customerAddress || '-'}</div>
+                <div><strong>Τηλέφωνο:</strong> ${customerPhone || '-'}</div>
+                <div><strong>ΑΦΜ:</strong> ${customerAFM || '-'}</div>
+              </div>
+              <div class="info-box">
+                <h3>Στοιχεία Προσφοράς</h3>
+                <div><strong>Πρόγραμμα:</strong> ${$('program').selectedOptions[0].text}</div>
+                <div><strong>Ημερομηνία:</strong> ${date}</div>
+                ${(productVoucherCode || serviceVoucherCode) ? `
+                  <div style="margin-top: 8px;">
+                    <h4 style="margin: 0 0 3px 0; font-size: 10px; color: #005bbb;">Κωδικοί Voucher:</h4>
+                    ${productVoucherCode ? `<div><strong>Προϊόν:</strong> ${productVoucherCode}</div>` : ''}
+                    ${serviceVoucherCode ? `<div><strong>Υπηρεσία:</strong> ${serviceVoucherCode}</div>` : ''}
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+            
+            <h3 style="color: #005bbb; margin: 12px 0 6px 0; font-size: 12px;">Προϊόν & Υπηρεσίες</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Περιγραφή</th>
+                  <th style="width: 10%">Ποσότητα</th>
+                  <th style="width: 15%; text-align: right">Τιμή Μονάδας</th>
+                  <th style="width: 15%; text-align: right">Σύνολο</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>${productName}</strong><br>
+                    <small>EAN: ${productEAN || '-'}</small>
+                  </td>
+                  <td>${qty}</td>
+                  <td style="text-align: right">${productPrice}</td>
+                  <td style="text-align: right">${productTotal}</td>
+                </tr>
+                <tr>
+                  <td colspan="3"><strong>Χρέωση Υπηρεσίας</strong></td>
+                  <td style="text-align: right">${serviceCharge}</td>
+                </tr>
+                ${extras.map(extra => `
+                  <tr>
+                    <td colspan="3">${extra.desc || 'Επιπλέον χρέωση'}</td>
+                    <td style="text-align: right">${formatEUR(toNumber(extra.amount))}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+            
+            <div class="totals">
+              <div class="total-row">
+                <span>Μικτό Σύνολο:</span>
+                <span>${grossTotal}</span>
+              </div>
+              
+              ${$('programVoucherLine').style.display !== 'none' ? `
+                <div class="total-row">
+                  <span>Voucher Προγράμματος (${$('programRate').value}%):</span>
+                  <span>${programVoucher}</span>
+                </div>
+              ` : ''}
+              
+              ${discounts.map((discount, index) => {
+                const value = formatNumber(discount.value);
+                const type = discount.type === 'PERCENT' ? `${value}%` : `${formatEUR(discount.value)}`;
+                const reason = discount.reason ? ` (${discount.reason})` : '';
+                return `
+                  <div class="total-row">
+                    <span>Επιπλέον Επιδότηση ΗΛΙΟΦΑΝ${reason}:</span>
+                    <span>-${type}</span>
+                  </div>
+                `;
+              }).join('')}
+              
+              <div class="final-total">
+                <span>Τελικό Πληρωτέο:</span>
+                <span>${finalTotal}</span>
+              </div>
+            </div>
+            
+            <div class="legal-terms-print">
+              Οι ηλιακοί θερμοσίφωνες (ΖΝΧ) είναι συσκευές παραγωγής ΖΝΧ και η απόδοσή τους επηρεάζεται από καιρό/περιοχή/προσανατολισμό/τοποθέτηση/χρήση. Η επιλογή μοντέλου και η θέση εγκατάστασης αποτελούν αποκλειστική ευθύνη του πελάτη. Υλικά σύνδεσης (σωληνώσεις/καλώδια/εξαρτήματα κ.λπ.) και ειδικές εργασίες (αποξήλωση παλαιού, γερανός, ανυψώσεις, σιδηροκατασκευές) χρεώνονται επιπλέον. Η μεταφορά γίνεται με ευθύνη/κίνδυνο αγοραστή και έξοδα πελάτη (εκτός έγγραφης συμφωνίας). Δεν γίνεται αδικαιολόγητη ακύρωση (ειδική παραγγελία/παραγωγή). Η εγγύηση ισχύει μόνο με σωστή εγκατάσταση/χρήση/service. Τα προϊόντα παραμένουν στην κυριότητα της εταιρείας έως πλήρη εξόφληση από πελάτη ή κρατικό φορέα επιδότησης.
+            </div>
+            
+            ${notes ? `
+              <div style="margin-top: 12px; padding: 8px; background: #f5f5f5; border-radius: 4px; font-size: 8pt; color: #666;">
+                <strong>Σημειώσεις:</strong><br>
+                ${notes.replace(/\n/g, '<br>')}
+              </div>
+            ` : ''}
+            
+            <div class="signatures">
+              <div class="signature-box">
+                <div>Υπογραφή Πελάτη</div>
+                <div class="signature-line">
+                  ${signature ? `<img src="${signature}" style="max-width: 100%; max-height: 40px;" />` : ''}
+                </div>
+                <div style="margin-top: 3px;">${customerName}</div>
+              </div>
+              
+              <div class="signature-box">
+                <div>Υπογραφή Πωλητή</div>
+                <div class="signature-line"></div>
+                <div style="margin-top: 3px;">${sellerName || 'ΗΛΙΟΦΑΝ'}</div>
+              </div>
+            </div>
+            
+            <div class="company-footer-print">
+              ΗΛΙΟΦΑΝ ΑΝΑΝΕΩΣΙΜΕΣ ΠΗΓΕΣ ΕΝΕΡΓΕΙΑΣ ΚΑΤΑΣΚΕΥΑΣΤΙΚΗ ΚΑΙ ΕΜΠΟΡΙΚΗ
+              <div style="font-size: 10px; color: #666; margin-top: 2px; font-weight: 500;">www.solars.gr - 801 7007 808</div>
+            </div>
+          </div>
+          
+          <script>
+            window.addEventListener('load', function() {
+              setTimeout(function() {
+                window.print();
+              }, 700);
+            });
+          <\/script>
+        </body>
+        </html>
+      `;
+      
+      printWindow.document.write(html);
+      printWindow.document.close();
+      
+      showToast('Η PDF δημιουργήθηκε επιτυχώς', 'success');
+    }
+    
+    function showHistory() {
+      const modal = $('historyModal');
+      const list = $('historyList');
+      const offers = loadOffers();
+      
+      if (offers.length === 0) {
+        list.innerHTML = `
+          <div style="text-align:center; padding:40px 20px; color:var(--muted);">
+            <div style="font-size:48px; margin-bottom:16px;">📄</div>
+            <div style="font-size:16px; margin-bottom:8px;">Δεν υπάρχουν αποθηκευμένες προσφορές</div>
+          </div>
+        `;
+      } else {
+        list.innerHTML = '';
+        offers.forEach(offer => {
+          const item = document.createElement('div');
+          item.className = 'history-item';
+          item.dataset.id = offer.id;
+          
+          const date = new Date(offer.timestamp);
+          const formattedDate = date.toLocaleDateString('el-GR', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          });
+          
+          const productPrice = toNumber(offer.product.price);
+          const qty = toNumber(offer.product.qty);
+          const productTotal = productPrice * qty;
+          const serviceTotal = toNumber(offer.service.charge);
+          const extrasTotal = (offer.extras || []).reduce((sum, e) => sum + toNumber(e.amount), 0);
+          const gross = productTotal + serviceTotal + extrasTotal;
+          const finalTotal = formatEUR(gross);
+          
+          item.innerHTML = `
+            <div class="history-info">
+              <div class="history-name">${offer.customer.name || 'Χωρίς όνομα'}</div>
+              <div class="history-meta">
+                <span>${offer.id}</span>
+                <span>${formattedDate}</span>
+                <span>${finalTotal}</span>
+              </div>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="mini" data-action="load" data-id="${offer.id}">Φόρτωση</button>
+              <button class="mini danger" data-action="delete" data-id="${offer.id}">Διαγραφή</button>
+            </div>
+          `;
+          
+          list.appendChild(item);
+        });
+        
+        list.querySelectorAll('[data-action="load"]').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = e.target.dataset.id;
+            loadOffer(id);
+            closeModal();
+          });
+        });
+        
+        list.querySelectorAll('[data-action="delete"]').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = e.target.dataset.id;
+            deleteOffer(id);
+            showHistory();
+          });
+        });
+        
+        list.querySelectorAll('.history-item').forEach(item => {
+          item.addEventListener('click', (e) => {
+            if (!e.target.closest('button')) {
+              const id = item.dataset.id;
+              loadOffer(id);
+              closeModal();
+            }
+          });
+        });
+      }
+      
+      modal.classList.add('active');
+    }
+    
+    function deleteOffer(id) {
+      if (!confirm('Να διαγραφεί αυτή η προσφορά;')) return;
+      
+      const offers = loadOffers();
+      const filtered = offers.filter(o => o.id !== id);
+      localStorage.setItem('heliofan_offers', JSON.stringify(filtered));
+      showToast('Η προσφορά διαγράφηκε', 'success');
+    }
+    
+    function closeModal() {
+      $('historyModal').classList.remove('active');
+    }
+    
+    function init() {
+      populateProductSelect();
+      
+      $('date').value = todayISO();
+      $('program').value = 'NONE';
+      applyProgramDefaults('NONE');
+      
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      
+      canvas.addEventListener('mousedown', startDrawing);
+      canvas.addEventListener('mousemove', draw);
+      window.addEventListener('mouseup', stopDrawing);
+      
+      canvas.addEventListener('touchstart', startDrawingTouch, { passive: false });
+      canvas.addEventListener('touchmove', drawTouch, { passive: false });
+      window.addEventListener('touchend', stopDrawing);
+      
+      $('sigClear').addEventListener('click', clearSignature);
+      $('sigUndo').addEventListener('click', undoSignature);
+      
+      $('search').addEventListener('input', (e) => {
+        const results = searchProducts(e.target.value);
+        const select = $('productSelect');
+        select.innerHTML = '<option value="">— (χειροκίνητη καταχώριση) —</option>';
+        results.forEach(product => {
+          const option = document.createElement('option');
+          option.value = product.ean;
+          option.textContent = `${product.ean} — ${product.name} (${formatEUR(product.price)})`;
+          select.appendChild(option);
+        });
+      });
+      
+      $('productSelect').addEventListener('change', (e) => {
+        if (e.target.value) {
+          selectProduct(e.target.value);
+        }
+      });
+      
+      $('program').addEventListener('change', (e) => {
+        applyProgramDefaults(e.target.value);
+      });
+      
+      const calcInputs = [
+        'customerName', 'customerAddress', 'customerPhone', 'customerAFM',
+        'sellerName', 'date', 'productName', 'productEAN', 'productPrice',
+        'qty', 'serviceCharge', 'serviceCap', 'productCap', 'programRate', 'notes',
+        'productVoucherCode', 'serviceVoucherCode'
+      ];
+      
+      calcInputs.forEach(id => {
+        const el = $(id);
+        if (el) {
+          el.addEventListener('input', calculate);
+        }
+      });
+      
+      $('addExtra').addEventListener('click', () => addExtraRow('', 0));
+      $('addDiscount').addEventListener('click', () => addDiscountRow('AMOUNT', 0, ''));
+      $('btnSave').addEventListener('click', saveOffer);
+      $('btnClear').addEventListener('click', clearForm);
+      $('btnPrint').addEventListener('click', generatePDF);
+      $('btnHistory').addEventListener('click', showHistory);
+      
+      $('historyModal').addEventListener('click', (e) => {
+        if (e.target === $('historyModal')) {
+          closeModal();
+        }
+      });
+      
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeModal();
+        }
+      });
+      
+      setTimeout(() => {
+        $('appLoading').style.opacity = '0';
+        setTimeout(() => {
+          $('appLoading').style.display = 'none';
+          $('app').style.display = 'block';
+        }, 300);
+        
+        const offers = loadOffers();
+        if (offers.length > 0) {
+          loadOffer(offers[0].id);
+        }
+        
+        showToast('Το σύστημα είναι έτοιμο!', 'success');
+      }, 1000);
+      
+      calculate();
+    }
+    
+    document.addEventListener('DOMContentLoaded', init);
+    window.closeModal = closeModal;
+  </script>
+</body>
+</html>
