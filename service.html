@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="el">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ΗΛΙΟΦΑΝ – Χρεώσεις Τεχνικού</title>
+  <style>
+    :root { --bg:#0b0f14; --card:#121926; --muted:#9aa4b2; --text:#e6edf3; --accent:#4cc9f0; --ok:#2dd4bf; --bad:#fb7185; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#070a0f,#0b0f14);color:var(--text)}
+    .wrap{max-width:1100px;margin:22px auto;padding:0 16px 40px}
+    .top{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+    .brand{background:rgba(76,201,240,.08);border:1px solid rgba(76,201,240,.25);padding:14px 16px;border-radius:16px}
+    .brand h1{margin:0 0 4px;font-size:18px}
+    .brand p{margin:0;color:var(--muted);font-size:13px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    button{border:0;padding:10px 12px;border-radius:12px;cursor:pointer;color:#0b0f14;font-weight:800}
+    .btn{background:var(--accent)}
+    .btn2{background:#cbd5e1}
+    .btnOk{background:var(--ok)}
+    .btnBad{background:var(--bad)}
+    .grid{margin-top:14px;display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+    .card{background:rgba(18,25,38,.9);border:1px solid rgba(148,163,184,.18);border-radius:18px;padding:14px;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+    h2{margin:0 0 10px;font-size:16px}
+    .small{font-size:12px;color:var(--muted)}
+    input, textarea{
+      width:100%;padding:10px 10px;border-radius:12px;border:1px solid rgba(148,163,184,.18);
+      background:rgba(7,10,15,.55);color:var(--text);outline:none
+    }
+    input:focus, textarea:focus{border-color:rgba(76,201,240,.55)}
+    textarea{min-height:90px;resize:vertical}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .split3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    @media(max-width:720px){.split,.split3{grid-template-columns:1fr}}
+    .row{display:grid;grid-template-columns:1fr 120px 110px;gap:10px;align-items:center;padding:10px;border-radius:14px;border:1px solid rgba(148,163,184,.12);margin-bottom:8px;background:rgba(7,10,15,.45)}
+    .row:hover{border-color:rgba(76,201,240,.25)}
+    .name{display:flex;gap:10px;align-items:flex-start}
+    .name label{font-weight:700;line-height:1.25}
+    .price{text-align:right;font-weight:850}
+    .pill{display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:14px;border:1px solid rgba(148,163,184,.16);background:rgba(7,10,15,.45)}
+    .pill span{font-weight:900}
+    .toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;border-radius:14px;border:1px solid rgba(148,163,184,.16);background:rgba(7,10,15,.45)}
+    .switch{position:relative;width:54px;height:30px;background:rgba(148,163,184,.25);border-radius:999px;cursor:pointer}
+    .knob{position:absolute;top:4px;left:4px;width:22px;height:22px;background:#0b0f14;border-radius:50%;transition:all .18s ease}
+    .switch.on{background:rgba(45,212,191,.55)}
+    .switch.on .knob{left:28px;background:#062826}
+    .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;white-space:pre-wrap;word-break:break-word;color:#dbe7ff}
+    .hint{margin-top:10px;color:var(--muted);font-size:12px}
+    @media print{
+      .actions, .shareArea {display:none !important}
+      body{background:#fff;color:#000}
+      .card{box-shadow:none;border:1px solid #ddd}
+      input,textarea{border:0 !important;background:transparent !important;color:#000 !important}
+      .pill,.toggle,.row{border:1px solid #ddd;background:#fff}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">
+      <h1>ΗΛΙΟΦΑΝ – Χρεώσεις Τεχνικού</h1>
+      <p>Offline • Τιμές χωρίς ΦΠΑ • ΦΠΑ 24% toggle • Share από κινητό</p>
+    </div>
+    <div class="actions">
+      <button class="btn2" id="btnNow">Τώρα (ημ/νία & ώρα)</button>
+      <button class="btn" id="btnPrint">Εκτύπωση / PDF</button>
+      <button class="btn2" id="btnSave">Αποθήκευση</button>
+      <button class="btnBad" id="btnReset">Καθαρισμός</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Στοιχεία Πελάτη</h2>
+      <div class="split">
+        <div>
+          <div class="small">Ονοματεπώνυμο / Εταιρεία</div>
+          <input id="customerName" type="text" placeholder="π.χ. Παπαδόπουλος Ιωάννης" />
+        </div>
+        <div>
+          <div class="small">Τηλέφωνο</div>
+          <input id="customerPhone" type="text" placeholder="π.χ. 69xxxxxxxx" />
+        </div>
+      </div>
+      <div style="height:10px"></div>
+      <div class="split">
+        <div>
+          <div class="small">Διεύθυνση</div>
+          <input id="customerAddress" type="text" placeholder="π.χ. Οδός, Πόλη" />
+        </div>
+        <div>
+          <div class="small">Ημερομηνία & Ώρα (auto)</div>
+          <input id="jobDateTime" type="text" />
+        </div>
+      </div>
+
+      <div style="height:10px"></div>
+      <div class="small">Σημειώσεις</div>
+      <textarea id="notes" placeholder="π.χ. Περιγραφή εργασίας / συμφωνία / παρατηρήσεις"></textarea>
+
+      <div style="height:14px"></div>
+      <h2>Υλικά Εγκατάστασης</h2>
+      <div id="items"></div>
+
+      <div class="hint">Tip: Για Viber, το πιο αξιόπιστο είναι “Αντιγραφή” και επικόλληση, ή PDF μέσω Share.</div>
+    </div>
+
+    <div class="card">
+      <h2>Υπολογισμός</h2>
+
+      <div class="toggle">
+        <div class="left">
+          <div class="t">ΦΠΑ 24%</div>
+          <div class="d">On = προσθέτει 24% στο σύνολο</div>
+        </div>
+        <div class="switch" id="vatSwitch" role="switch" aria-checked="false"><div class="knob"></div></div>
+      </div>
+
+      <div style="height:10px"></div>
+      <div class="split3">
+        <div>
+          <div class="small">Έκπτωση % (προαιρετικό)</div>
+          <input id="discountPct" type="number" min="0" max="100" step="0.1" value="0" />
+        </div>
+        <div>
+          <div class="small">Εργασία / Επίσκεψη (χωρίς ΦΠΑ)</div>
+          <input id="laborFee" type="number" min="0" step="0.01" value="0" />
+        </div>
+        <div>
+          <div class="small">Μεταφορικά (χωρίς ΦΠΑ)</div>
+          <input id="shippingFee" type="number" min="0" step="0.01" value="0" />
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+      <div class="pill"><strong>Καθαρή Αξία</strong><span id="net">0,00 €</span></div>
+      <div class="pill"><strong>Έκπτωση</strong><span id="discount">0,00 €</span></div>
+      <div class="pill"><strong>ΦΠΑ</strong><span id="vat">0,00 €</span></div>
+      <div class="pill"><strong>Σύνολο Πληρωτέο</strong><span id="total">0,00 €</span></div>
+
+      <div style="height:14px"></div>
+
+      <div class="shareArea">
+        <h2>Αποστολή</h2>
+        <div class="small">Σύνοψη (αυτό στέλνεται σαν κείμενο)</div>
+        <div class="card" style="padding:12px;border-radius:14px;background:rgba(7,10,15,.45);border:1px solid rgba(148,163,184,.16)">
+          <div id="summary" class="mono"></div>
+        </div>
+
+        <div style="height:10px"></div>
+        <div class="actions" style="justify-content:flex-start">
+          <button class="btnOk" id="btnCopy">Αντιγραφή</button>
+          <button class="btnOk" id="btnWhatsapp">WhatsApp</button>
+          <button class="btnOk" id="btnEmail">Email</button>
+        </div>
+
+        <div class="hint">
+          WhatsApp: ανοίγει chat με έτοιμο κείμενο.<br/>
+          Email: ανοίγει νέο email με subject+body.<br/>
+          Viber: κάνε “Αντιγραφή” → επικόλληση στο Viber, ή στείλε PDF.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ====== Config: τιμές ΧΩΡΙΣ ΦΠΑ (όπως τις έδωσες) ======
+  const itemsConfig = [
+    { id:"solina", name:"Σωλήνα", unit:"μ", unitPrice: 3.00 },
+    { id:"monosi", name:"Μόνωση", unit:"μ", unitPrice: 2.00 },
+    { id:"kalodio", name:"Καλώδιο", unit:"μ", unitPrice: 3.00 },
+    { id:"spiral", name:"Σπιράλ", unit:"τεμ", unitPrice: 1.00 },
+    { id:"mini", name:"Mini Διακόπτης", unit:"τεμ", unitPrice: 5.00 },
+    { id:"rakor", name:"Ρακόρ", unit:"τεμ", unitPrice: 2.50 },
+    { id:"exaer", name:"Εξαεριστικά", unit:"τεμ", unitPrice: 15.00 },
+    { id:"triodi", name:"Τρίοδη Βάνα", unit:"τεμ", unitPrice: 40.00 },
+    { id:"valv_iliakou", name:"Βαλβίδα Ηλιακού", unit:"τεμ", unitPrice: 5.00 },
+    { id:"valv_kryou", name:"Βαλβίδα Κρύου", unit:"τεμ", unitPrice: 5.00 },
+  ];
+
+  const els = {
+    items: document.getElementById("items"),
+    net: document.getElementById("net"),
+    discount: document.getElementById("discount"),
+    vat: document.getElementById("vat"),
+    total: document.getElementById("total"),
+    summary: document.getElementById("summary"),
+    vatSwitch: document.getElementById("vatSwitch"),
+    discountPct: document.getElementById("discountPct"),
+    laborFee: document.getElementById("laborFee"),
+    shippingFee: document.getElementById("shippingFee"),
+
+    customerName: document.getElementById("customerName"),
+    customerPhone: document.getElementById("customerPhone"),
+    customerAddress: document.getElementById("customerAddress"),
+    jobDateTime: document.getElementById("jobDateTime"),
+    notes: document.getElementById("notes"),
+
+    btnNow: document.getElementById("btnNow"),
+    btnPrint: document.getElementById("btnPrint"),
+    btnSave: document.getElementById("btnSave"),
+    btnReset: document.getElementById("btnReset"),
+    btnCopy: document.getElementById("btnCopy"),
+    btnWhatsapp: document.getElementById("btnWhatsapp"),
+    btnEmail: document.getElementById("btnEmail"),
+  };
+
+  let vatOn = false;
+
+  function euro(n){
+    return (n||0).toLocaleString("el-GR",{minimumFractionDigits:2, maximumFractionDigits:2}) + " €";
+  }
+  function nowStr(){
+    const d = new Date();
+    const pad = (x)=> String(x).padStart(2,"0");
+    return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+  function toNum(v){
+    const x = parseFloat(String(v).replace(",","."));
+    return Number.isFinite(x) ? x : 0;
+  }
+
+  function renderItems(){
+    els.items.innerHTML = "";
+    itemsConfig.forEach(it=>{
+      const row = document.createElement("div");
+      row.className = "row";
+      row.innerHTML = `
+        <div class="name">
+          <input type="checkbox" id="chk_${it.id}" />
+          <div>
+            <label for="chk_${it.id}">${it.name}</label>
+            <div class="small">${euro(it.unitPrice)} / ${it.unit}</div>
+          </div>
+        </div>
+        <div>
+          <div class="small">Ποσότητα</div>
+          <input type="number" min="0" step="${it.unit==='μ' ? '0.1' : '1'}" value="0" id="qty_${it.id}" />
+        </div>
+        <div class="price" id="sub_${it.id}">0,00 €</div>
+      `;
+      els.items.appendChild(row);
+
+      row.querySelector(`#chk_${it.id}`).addEventListener("change", calcAll);
+      row.querySelector(`#qty_${it.id}`).addEventListener("input", calcAll);
+    });
+  }
+
+  function collectLines(){
+    const lines = [];
+    let itemsNet = 0;
+
+    itemsConfig.forEach(it=>{
+      const checked = document.getElementById(`chk_${it.id}`).checked;
+      const qty = toNum(document.getElementById(`qty_${it.id}`).value);
+      const subtotal = (checked ? qty : 0) * it.unitPrice;
+
+      document.getElementById(`sub_${it.id}`).textContent = euro(subtotal);
+
+      if(checked && qty > 0){
+        lines.push({ name: it.name, qty, unit: it.unit, unitPrice: it.unitPrice, subtotal });
+        itemsNet += subtotal;
+      }
+    });
+
+    return { lines, itemsNet };
+  }
+
+  function buildSummary(data){
+    const name = els.customerName.value.trim();
+    const phone = els.customerPhone.value.trim();
+    const addr = els.customerAddress.value.trim();
+    const dt = els.jobDateTime.value.trim();
+    const notes = els.notes.value.trim();
+
+    const header = [
+      "ΗΛΙΟΦΑΝ – Τεχνικές Χρεώσεις",
+      dt ? `Ημ/νία & Ώρα: ${dt}` : "",
+      name ? `Πελάτης: ${name}` : "Πελάτης: (—)",
+      phone ? `Τηλ: ${phone}` : "",
+      addr ? `Διεύθυνση: ${addr}` : "",
+      ""
+    ].filter(Boolean).join("\n");
+
+    const bodyLines = data.lines.length
+      ? data.lines.map(l => `• ${l.name}: ${l.qty} ${l.unit} × ${euro(l.unitPrice)} = ${euro(l.subtotal)}`).join("\n")
+      : "• (Δεν έχουν επιλεγεί υλικά)";
+
+    const fees = [];
+    const labor = toNum(els.laborFee.value);
+    const ship = toNum(els.shippingFee.value);
+    if(labor > 0) fees.push(`• Εργασία/Επίσκεψη: ${euro(labor)}`);
+    if(ship > 0) fees.push(`• Μεταφορικά: ${euro(ship)}`);
+
+    const totals = [
+      "",
+      "Σύνολα:",
+      `Καθαρή Αξία: ${euro(data.net)}`,
+      `Έκπτωση: ${euro(data.discountAmount)} (${toNum(els.discountPct.value)}%)`,
+      `ΦΠΑ: ${euro(data.vat)}` + (vatOn ? " (24%)" : " (off)"),
+      `Πληρωτέο: ${euro(data.total)}`,
+    ].join("\n");
+
+    const notesPart = notes ? `\n\nΣημειώσεις:\n${notes}` : "";
+
+    return `${header}\nΥλικά:\n${bodyLines}${fees.length ? "\n\nΧρεώσεις:\n"+fees.join("\n") : ""}${totals}${notesPart}`;
+  }
+
+  function calcAll(){
+    const { lines, itemsNet } = collectLines();
+
+    const labor = toNum(els.laborFee.value);
+    const ship = toNum(els.shippingFee.value);
+    const rawNet = itemsNet + labor + ship;
+
+    const discPct = Math.min(100, Math.max(0, toNum(els.discountPct.value)));
+    const discountAmount = rawNet * (discPct / 100);
+    const netAfterDiscount = rawNet - discountAmount;
+
+    const vat = vatOn ? netAfterDiscount * 0.24 : 0;
+    const total = netAfterDiscount + vat;
+
+    els.net.textContent = euro(rawNet);
+    els.discount.textContent = euro(discountAmount);
+    els.vat.textContent = euro(vat);
+    els.total.textContent = euro(total);
+
+    const summaryText = buildSummary({ lines, net: rawNet, discountAmount, vat, total });
+    els.summary.textContent = summaryText;
+
+    // autosave light
+    saveState(true);
+  }
+
+  function setVat(on){
+    vatOn = on;
+    els.vatSwitch.classList.toggle("on", vatOn);
+    els.vatSwitch.setAttribute("aria-checked", String(vatOn));
+    calcAll();
+  }
+
+  function saveState(silent=false){
+    const state = {
+      vatOn,
+      customerName: els.customerName.value,
+      customerPhone: els.customerPhone.value,
+      customerAddress: els.customerAddress.value,
+      jobDateTime: els.jobDateTime.value,
+      notes: els.notes.value,
+      discountPct: els.discountPct.value,
+      laborFee: els.laborFee.value,
+      shippingFee: els.shippingFee.value,
+      items: itemsConfig.map(it=>({
+        id: it.id,
+        checked: document.getElementById(`chk_${it.id}`).checked,
+        qty: document.getElementById(`qty_${it.id}`).value
+      }))
+    };
+    localStorage.setItem("heliofan_tech_charges_v1", JSON.stringify(state));
+    if(!silent) alert("Αποθηκεύτηκε.");
+  }
+
+  function loadState(){
+    const raw = localStorage.getItem("heliofan_tech_charges_v1");
+    if(!raw) return;
+    try{
+      const s = JSON.parse(raw);
+      setVat(!!s.vatOn);
+      els.customerName.value = s.customerName || "";
+      els.customerPhone.value = s.customerPhone || "";
+      els.customerAddress.value = s.customerAddress || "";
+      els.jobDateTime.value = s.jobDateTime || nowStr();
+      els.notes.value = s.notes || "";
+      els.discountPct.value = s.discountPct ?? "0";
+      els.laborFee.value = s.laborFee ?? "0";
+      els.shippingFee.value = s.shippingFee ?? "0";
+      (s.items || []).forEach(x=>{
+        const chk = document.getElementById(`chk_${x.id}`);
+        const qty = document.getElementById(`qty_${x.id}`);
+        if(chk) chk.checked = !!x.checked;
+        if(qty) qty.value = x.qty ?? "0";
+      });
+    }catch(e){ /* ignore */ }
+  }
+
+  // ====== Share handlers ======
+  function getSummaryText(){
+    return els.summary.textContent || "";
+  }
+  function openWhatsApp(){
+    const text = encodeURIComponent(getSummaryText());
+    // universal WhatsApp deep link (works on mobile, and desktop web)
+    const url = `https://wa.me/?text=${text}`;
+    window.open(url, "_blank");
+  }
+  function openEmail(){
+    const subject = encodeURIComponent("ΗΛΙΟΦΑΝ – Χρεώσεις Τεχνικού");
+    const body = encodeURIComponent(getSummaryText());
+    const url = `mailto:?subject=${subject}&body=${body}`;
+    window.location.href = url;
+  }
+  async function copySummary(){
+    const text = getSummaryText();
+    try{
+      await navigator.clipboard.writeText(text);
+      alert("Αντιγράφηκε. (Κάνε paste σε Viber/WhatsApp/email)");
+    }catch(e){
+      // fallback
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+      alert("Αντιγράφηκε. (Κάνε paste σε Viber/WhatsApp/email)");
+    }
+  }
+
+  // ====== Events ======
+  els.vatSwitch.addEventListener("click", ()=> setVat(!vatOn));
+  ["input","change"].forEach(ev=>{
+    els.discountPct.addEventListener(ev, calcAll);
+    els.laborFee.addEventListener(ev, calcAll);
+    els.shippingFee.addEventListener(ev, calcAll);
+    els.customerName.addEventListener(ev, calcAll);
+    els.customerPhone.addEventListener(ev, calcAll);
+    els.customerAddress.addEventListener(ev, calcAll);
+    els.notes.addEventListener(ev, calcAll);
+  });
+
+  els.btnNow.addEventListener("click", ()=>{ els.jobDateTime.value = nowStr(); calcAll(); });
+  els.btnPrint.addEventListener("click", ()=> window.print());
+  els.btnSave.addEventListener("click", ()=> saveState(false));
+  els.btnReset.addEventListener("click", ()=>{
+    if(!confirm("Σίγουρα καθαρισμός;")) return;
+    localStorage.removeItem("heliofan_tech_charges_v1");
+    location.reload();
+  });
+
+  els.btnCopy.addEventListener("click", copySummary);
+  els.btnWhatsapp.addEventListener("click", openWhatsApp);
+  els.btnEmail.addEventListener("click", openEmail);
+
+  // ====== Init ======
+  renderItems();
+  els.jobDateTime.value = nowStr();
+  loadState();
+  if(!localStorage.getItem("heliofan_tech_charges_v1")){
+    setVat(false);
+  }
+  calcAll();
+</script>
+</body>
+</html>
